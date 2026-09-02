@@ -1,0 +1,1164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Protect the First Drop</title>
+
+  <meta
+    name="description"
+    content="An interactive journey showing how pollution travels from streets to water sources."
+  >
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+  <link
+    href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=Inter:wght@400;500;600;700;800&display=swap"
+    rel="stylesheet"
+  >
+
+  <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+<!-- =====================================================
+     HEADER
+===================================================== -->
+
+<header class="topbar">
+
+  <div class="brand">
+    <span class="brand-dot"></span>
+    PROTECT THE FIRST DROP
+  </div>
+
+  <div class="system">
+    SDG 06
+    <span>● ONLINE</span>
+  </div>
+
+</header>
+
+
+<!-- =====================================================
+     HERO
+===================================================== -->
+
+<main>
+
+<section class="hero">
+
+  <div class="hero-left">
+
+    <div class="eyebrow">
+      WATER SYSTEM / 01
+    </div>
+
+    <h1>
+      WHERE DOES<br>
+      WATER GO?
+    </h1>
+
+    <p class="hero-copy">
+      Follow the journey of pollution from the street
+      to the water source.
+    </p>
+
+  </div>
+
+
+  <div class="hero-map">
+
+    <div class="map-label label-01">STREET</div>
+    <div class="map-label label-02">DRAIN</div>
+    <div class="map-label label-03">CANAL</div>
+    <div class="map-label label-04">RIVER</div>
+    <div class="map-label label-05">SOURCE</div>
+
+    <svg
+      class="hero-flow"
+      viewBox="0 0 700 400"
+      preserveAspectRatio="none"
+    >
+
+      <path
+        d="M30 80
+           C150 30 160 180 260 130
+           C360 80 360 280 470 220
+           C560 170 600 310 680 270"
+      />
+
+      <path
+        d="M30 100
+           C150 50 170 200 270 150
+           C370 100 370 300 480 240
+           C570 190 610 330 680 290"
+      />
+
+    </svg>
+
+    <div class="hero-particle particle-1"></div>
+    <div class="hero-particle particle-2"></div>
+    <div class="hero-particle particle-3"></div>
+
+  </div>
+
+</section>
+
+
+<!-- =====================================================
+     WATER JOURNEY
+===================================================== -->
+
+<section class="journey-section">
+
+  <div class="section-heading">
+
+    <div>
+
+      <span class="eyebrow">
+        SYSTEM FLOW / 01—04
+      </span>
+
+      <h2>
+        THE WATER JOURNEY
+      </h2>
+
+    </div>
+
+    <span class="instruction">
+      CLICK A STAGE TO EXPLORE
+    </span>
+
+  </div>
+
+
+  <div class="journey">
+
+    <div class="journey-line">
+      <span></span>
+    </div>
+
+
+    <!-- STAGE 01 -->
+
+    <button
+      class="stage active"
+      data-stage="0"
+    >
+
+      <div class="stage-number">
+        01
+      </div>
+
+      <div class="stage-icon drain-icon">
+
+        <div class="drain-grid">
+          <i></i>
+          <i></i>
+          <i></i>
+          <i></i>
+          <i></i>
+          <i></i>
+        </div>
+
+      </div>
+
+      <div class="stage-text">
+
+        <small>
+          ENTRY POINT
+        </small>
+
+        <strong>
+          STORM DRAIN
+        </strong>
+
+        <span>
+          Street litter enters the system.
+        </span>
+
+      </div>
+
+    </button>
+
+
+    <!-- STAGE 02 -->
+
+    <button
+      class="stage"
+      data-stage="1"
+    >
+
+      <div class="stage-number">
+        02
+      </div>
+
+      <div class="stage-icon canal-icon">
+
+        <span></span>
+        <span></span>
+        <span></span>
+
+      </div>
+
+      <div class="stage-text">
+
+        <small>
+          URBAN WATERWAY
+        </small>
+
+        <strong>
+          CANAL
+        </strong>
+
+        <span>
+          Pollution travels with the current.
+        </span>
+
+      </div>
+
+    </button>
+
+
+    <!-- STAGE 03 -->
+
+    <button
+      class="stage"
+      data-stage="2"
+    >
+
+      <div class="stage-number">
+        03
+      </div>
+
+      <div class="stage-icon river-icon">
+
+        <span></span>
+        <span></span>
+        <span></span>
+
+      </div>
+
+      <div class="stage-text">
+
+        <small>
+          CONNECTED ECOSYSTEM
+        </small>
+
+        <strong>
+          RIVER
+        </strong>
+
+        <span>
+          Pollution spreads downstream.
+        </span>
+
+      </div>
+
+    </button>
+
+
+    <!-- STAGE 04 -->
+
+    <button
+      class="stage"
+      data-stage="3"
+    >
+
+      <div class="stage-number">
+        04
+      </div>
+
+      <div class="stage-icon source-icon">
+
+        <span></span>
+        <span></span>
+        <span></span>
+
+      </div>
+
+      <div class="stage-text">
+
+        <small>
+          FINAL DESTINATION
+        </small>
+
+        <strong>
+          WATER SOURCE
+        </strong>
+
+        <span>
+          The water we depend on.
+        </span>
+
+      </div>
+
+    </button>
+
+  </div>
+
+
+<!-- =====================================================
+     GENERATIVE ART
+===================================================== -->
+
+<div class="art-section">
+
+  <div class="art-info">
+
+    <span class="eyebrow">
+      GENERATIVE ART / STAGE <span id="art-number">01</span>
+    </span>
+
+    <h3 id="art-title">
+      STORM DRAIN
+    </h3>
+
+    <p id="art-description">
+      Small pieces of litter left on streets can eventually
+      contaminate drinking water supplies.
+    </p>
+
+    <div class="art-meta">
+
+      <div>
+        <small>ARTWORK</small>
+        <strong id="member-name">MEMBER 01</strong>
+      </div>
+
+      <div>
+        <small>STATUS</small>
+        <strong
+          class="pollution-status"
+          id="art-status"
+        >
+          POLLUTION DETECTED
+        </strong>
+      </div>
+
+    </div>
+
+  </div>
+
+
+  <div
+    id="p5-container"
+    class="p5-container"
+  ></div>
+
+</div>
+
+</section>
+
+
+<!-- =====================================================
+     REAL CASE
+===================================================== -->
+
+<section class="case-section">
+
+  <div class="case-number">
+    02
+  </div>
+
+  <div class="case-content">
+
+    <span class="eyebrow">
+      REAL CASE / VIETNAM
+    </span>
+
+    <h2>
+      POLLUTED CANAL<br>
+      IN HO CHI MINH CITY
+    </h2>
+
+    <p class="case-intro">
+      More than 10 years ago, a canal in Ho Chi Minh City
+      was described as having foul-smelling, pitch-black
+      water and so much garbage that it appeared almost
+      solid enough to walk across.
+    </p>
+
+    <div class="case-grid">
+
+      <div class="case-stat">
+
+        <strong>
+          BLACK
+        </strong>
+
+        <span>
+          WATER
+        </span>
+
+      </div>
+
+      <div class="case-stat">
+
+        <strong>
+          HEAVY
+        </strong>
+
+        <span>
+          LITTER
+        </span>
+
+      </div>
+
+      <div class="case-stat">
+
+        <strong>
+          FOUL
+        </strong>
+
+        <span>
+          STENCH
+        </span>
+
+      </div>
+
+    </div>
+
+    <p class="case-note">
+      Everyday littering can eventually destroy
+      urban waterways.
+    </p>
+
+  </div>
+
+</section>
+
+
+<!-- =====================================================
+     DATA VISUALIZATION
+===================================================== -->
+
+<section class="data-section">
+
+  <div class="section-heading">
+
+    <div>
+
+      <span class="eyebrow">
+        RESEARCH DATA / 01
+      </span>
+
+      <h2>
+        WHEN POLLUTION<br>
+        TRAVELS
+      </h2>
+
+    </div>
+
+    <span class="instruction">
+      DATA FROM GROUP RESEARCH
+    </span>
+
+  </div>
+
+
+  <div class="data-grid">
+
+
+    <!-- 80% -->
+
+    <article class="data-card">
+
+      <div class="data-header">
+
+        <span>
+          LAND-BASED PLASTIC
+        </span>
+
+        <span class="red-text">
+          01
+        </span>
+
+      </div>
+
+      <div class="data-number">
+        80<span>%</span>
+      </div>
+
+      <div class="data-visual">
+
+        <div class="bar-track">
+          <div
+            class="bar-fill red-fill"
+            style="width:80%"
+          ></div>
+        </div>
+
+      </div>
+
+      <p>
+        Around 80% of marine plastic pollution
+        originates from land-based sources and is
+        carried into waterways through rivers and
+        stormwater systems.
+      </p>
+
+      <small>
+        UNEP / 2023
+      </small>
+
+    </article>
+
+
+    <!-- 94% -->
+
+    <article class="data-card">
+
+      <div class="data-header">
+
+        <span>
+          VIETNAMESE WATERWAYS
+        </span>
+
+        <span class="red-text">
+          02
+        </span>
+
+      </div>
+
+      <div class="percentage-ring">
+
+        <div>
+          <strong>94</strong>
+          <span>%</span>
+        </div>
+
+      </div>
+
+      <p>
+        Plastic accounts for 94% of waste found
+        at Vietnamese river and coastal survey sites.
+      </p>
+
+      <small>
+        WORLD BANK / 2024
+      </small>
+
+    </article>
+
+
+    <!-- 27% -->
+
+    <article class="data-card">
+
+      <div class="data-header">
+
+        <span>
+          PLASTIC RECOVERY
+        </span>
+
+        <span class="red-text">
+          03
+        </span>
+
+      </div>
+
+      <div class="split-data">
+
+        <div>
+
+          <strong>
+            27<span>%</span>
+          </strong>
+
+          <small>
+            RECYCLED / REUSED
+          </small>
+
+        </div>
+
+        <div>
+
+          <strong class="muted-number">
+            73<span>%</span>
+          </strong>
+
+          <small>
+            NOT RECYCLED
+          </small>
+
+        </div>
+
+      </div>
+
+      <div class="data-bar">
+
+        <div
+          class="blue-part"
+          style="width:27%"
+        ></div>
+
+        <div
+          class="red-part"
+          style="width:73%"
+        ></div>
+
+      </div>
+
+      <p>
+        Vietnam produces around 1.8 million tonnes
+        of plastic waste each year, but only 27%
+        is recycled or reused.
+      </p>
+
+      <small>
+        MONRE / 2024
+      </small>
+
+    </article>
+
+
+    <!-- 1 MILLION -->
+
+    <article class="data-card">
+
+      <div class="data-header">
+
+        <span>
+          PLASTIC BOTTLES
+        </span>
+
+        <span class="red-text">
+          04
+        </span>
+
+      </div>
+
+      <div class="bottle-number">
+        1M<span>+</span>
+      </div>
+
+      <div class="minute-label">
+        BOTTLES / MINUTE
+      </div>
+
+      <div class="bottle-dots">
+
+        <i></i>
+        <i></i>
+        <i></i>
+        <i></i>
+        <i></i>
+        <i></i>
+        <i></i>
+        <i></i>
+        <i></i>
+        <i></i>
+        <i></i>
+        <i></i>
+
+      </div>
+
+      <p>
+        The world buys over 1 million plastic bottles
+        every minute.
+      </p>
+
+      <small>
+        UNEP / 2023
+      </small>
+
+    </article>
+
+  </div>
+
+</section>
+
+
+<!-- =====================================================
+     IMPACT
+===================================================== -->
+
+<section class="impact-section">
+
+  <div class="impact-heading">
+
+    <span class="eyebrow">
+      IMPACT / 02
+    </span>
+
+    <h2>
+      POLLUTED WATER<br>
+      AFFECTS PEOPLE.
+    </h2>
+
+    <p>
+      Pollution does not stop when it enters
+      a waterway.
+    </p>
+
+  </div>
+
+
+  <div class="impact-stats">
+
+    <div class="impact-stat">
+
+      <strong>
+        9,000
+      </strong>
+
+      <span>
+        DEATHS / YEAR
+      </span>
+
+      <p>
+        Linked to polluted water and
+        poor sanitation.
+      </p>
+
+    </div>
+
+
+    <div class="impact-stat">
+
+      <strong>
+        200,000
+      </strong>
+
+      <span>
+        CANCER CASES / YEAR
+      </span>
+
+      <p>
+        Linked to polluted water and
+        poor sanitation.
+      </p>
+
+    </div>
+
+  </div>
+
+
+  <div class="disease-list">
+
+    <span>CHOLERA</span>
+    <span>TYPHOID</span>
+    <span>SKIN DISEASE</span>
+    <span>RESPIRATORY ILLNESS</span>
+    <span>CANCER</span>
+
+  </div>
+
+</section>
+
+
+<!-- =====================================================
+     CTA
+===================================================== -->
+
+<section class="cta-section">
+
+  <div class="cta-heading">
+
+    <span class="eyebrow">
+      ACTION / TODAY
+    </span>
+
+    <h2>
+      REDUCE ONE POLLUTANT<br>
+      BEFORE IT REACHES WATER.
+    </h2>
+
+  </div>
+
+
+  <div class="action-grid">
+
+
+    <article class="action-card">
+
+      <div class="action-number">
+        01
+      </div>
+
+      <div class="action-icon">
+        +
+      </div>
+
+      <h3>
+        PICK UP ONE
+      </h3>
+
+      <p>
+        Pick up one piece of litter near a drain.
+      </p>
+
+    </article>
+
+
+    <article class="action-card">
+
+      <div class="action-number">
+        02
+      </div>
+
+      <div class="action-icon">
+        ↻
+      </div>
+
+      <h3>
+        REUSE
+      </h3>
+
+      <p>
+        Bring a reusable water bottle.
+      </p>
+
+    </article>
+
+
+    <article class="action-card">
+
+      <div class="action-number">
+        03
+      </div>
+
+      <div class="action-icon">
+        ×
+      </div>
+
+      <h3>
+        KEEP OIL OUT
+      </h3>
+
+      <p>
+        Never pour cooking oil into the sink.
+      </p>
+
+    </article>
+
+
+    <article class="action-card">
+
+      <div class="action-number">
+        04
+      </div>
+
+      <div class="action-icon">
+        ↓
+      </div>
+
+      <h3>
+        AFTER RAIN
+      </h3>
+
+      <p>
+        Dispose of rubbish properly after rain.
+      </p>
+
+    </article>
+
+
+    <article class="action-card">
+
+      <div class="action-number">
+        05
+      </div>
+
+      <div class="action-icon">
+        −
+      </div>
+
+      <h3>
+        USE LESS PLASTIC
+      </h3>
+
+      <p>
+        Reduce single-use plastics.
+      </p>
+
+    </article>
+
+  </div>
+
+</section>
+
+
+<!-- =====================================================
+     CORE MESSAGE
+===================================================== -->
+
+<section class="message-section">
+
+  <div class="message-label">
+    CORE MESSAGE
+  </div>
+
+  <div class="message-content">
+
+    <span>
+      DON'T JUST
+    </span>
+
+    <h2>
+      CLEAN<br>
+      POLLUTED WATER.
+    </h2>
+
+    <div class="message-arrow">
+      ↓
+    </div>
+
+    <span>
+      INSTEAD,
+    </span>
+
+    <h2 class="blue-message">
+      KEEP CLEAN<br>
+      WATER CLEAN.
+    </h2>
+
+  </div>
+
+</section>
+
+
+<!-- =====================================================
+     CONCLUSION
+===================================================== -->
+
+<section class="conclusion">
+
+  <div class="conclusion-small">
+    SDG 06 / CLEAN WATER & SANITATION
+  </div>
+
+  <h2>
+    WATER IS<br>
+    A HUMAN RIGHT.
+  </h2>
+
+  <p>
+    By changing one small habit today,
+    we can help protect clean water before
+    it becomes polluted.
+  </p>
+
+  <div class="final-line">
+    PROTECT THE FIRST DROP.
+  </div>
+
+</section>
+
+
+</main>
+
+
+<!-- =====================================================
+     FOOTER
+===================================================== -->
+
+<footer>
+
+  <span>
+    PROTECT THE FIRST DROP
+  </span>
+
+  <span>
+    SDG 06 · H4O
+  </span>
+
+</footer>
+
+
+<!-- =====================================================
+     P5
+===================================================== -->
+
+<script src="https://cdn.jsdelivr.net/npm/p5@1.11.13/lib/p5.js"></script>
+
+<script src="stormDrain.js"></script>
+<script src="canal.js"></script>
+<script src="river.js"></script>
+<script src="waterSource.js"></script>
+
+
+<!-- =====================================================
+     CONTROLLER
+===================================================== -->
+
+<script>
+
+let currentArtwork = null;
+
+const stageData = [
+
+  {
+    title: "STORM DRAIN",
+    number: "01",
+    member: "MEMBER 01",
+    status: "POLLUTION DETECTED",
+    description:
+      "Small pieces of litter left on streets can eventually contaminate drinking water supplies."
+  },
+
+  {
+    title: "CANAL",
+    number: "02",
+    member: "MEMBER 02",
+    status: "POLLUTION MOVING",
+    description:
+      "Rainwater carries litter into storm drains and connected urban waterways."
+  },
+
+  {
+    title: "RIVER",
+    number: "03",
+    member: "MEMBER 03",
+    status: "SPREADING DOWNSTREAM",
+    description:
+      "Pollution travels downstream and can affect connected river ecosystems."
+  },
+
+  {
+    title: "WATER SOURCE",
+    number: "04",
+    member: "MEMBER 04",
+    status: "SOURCE AT RISK",
+    description:
+      "Pollution can eventually reach the water sources that communities depend on."
+  }
+
+];
+
+
+const artworkCreators = [
+
+  createStormDrainArt,
+  createCanalArt,
+  createRiverArt,
+  createWaterSourceArt
+
+];
+
+
+function loadArtwork(index) {
+
+  if (currentArtwork) {
+
+    currentArtwork.remove();
+
+    currentArtwork = null;
+
+  }
+
+
+  const container =
+    document.getElementById("p5-container");
+
+
+  container.innerHTML = "";
+
+
+  currentArtwork =
+    artworkCreators[index](container);
+
+}
+
+
+function selectStage(index) {
+
+  const data =
+    stageData[index];
+
+
+  document
+    .querySelectorAll(".stage")
+    .forEach((stage) => {
+
+      stage.classList.remove("active");
+
+    });
+
+
+  const selected =
+    document.querySelector(
+      `.stage[data-stage="${index}"]`
+    );
+
+
+  if (selected) {
+
+    selected.classList.add("active");
+
+  }
+
+
+  document.getElementById(
+    "art-number"
+  ).textContent =
+    data.number;
+
+
+  document.getElementById(
+    "art-title"
+  ).textContent =
+    data.title;
+
+
+  document.getElementById(
+    "member-name"
+  ).textContent =
+    data.member;
+
+
+  document.getElementById(
+    "art-status"
+  ).textContent =
+    data.status;
+
+
+  document.getElementById(
+    "art-description"
+  ).textContent =
+    data.description;
+
+
+  loadArtwork(index);
+
+
+  document
+    .querySelector(".art-section")
+    .scrollIntoView({
+      behavior: "smooth",
+      block: "center"
+    });
+
+}
+
+
+document
+  .querySelectorAll(".stage")
+  .forEach((stage) => {
+
+    stage.addEventListener(
+      "click",
+      () => {
+
+        const index =
+          Number(stage.dataset.stage);
+
+        selectStage(index);
+
+      }
+    );
+
+  });
+
+
+loadArtwork(0);
+
+</script>
+
+</body>
+</html>
