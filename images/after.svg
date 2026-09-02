@@ -1,0 +1,29 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 800" role="img" aria-label="Clean water after intervention">
+  <defs>
+    <linearGradient id="sky" x1="0" x2="1" y1="0" y2="1">
+      <stop offset="0%" stop-color="#eef8ff"/>
+      <stop offset="100%" stop-color="#d6ecff"/>
+    </linearGradient>
+    <linearGradient id="water" x1="0" x2="1">
+      <stop offset="0%" stop-color="#60b6ff"/>
+      <stop offset="100%" stop-color="#1e78c7"/>
+    </linearGradient>
+  </defs>
+  <rect width="1200" height="800" fill="url(#sky)"/>
+  <rect y="430" width="1200" height="370" fill="url(#water)" opacity="0.9"/>
+  <path d="M0 470C110 440 230 500 370 485C510 470 610 420 750 432C880 444 980 490 1200 475V800H0Z" fill="#53b2ff" opacity="0.38"/>
+  <g fill="#f4fbff" opacity="0.28">
+    <circle cx="90" cy="180" r="56"/>
+    <circle cx="230" cy="140" r="92"/>
+    <circle cx="990" cy="210" r="72"/>
+  </g>
+  <g stroke="#ffffff" stroke-opacity="0.25" stroke-width="2">
+    <path d="M60 670C220 620 320 630 410 670" fill="none"/>
+    <path d="M430 685C580 628 680 630 820 680" fill="none"/>
+    <path d="M840 670C980 622 1045 636 1140 680" fill="none"/>
+  </g>
+  <g fill="#ffffff" opacity="0.8">
+    <path d="M300 225c-42-45-108-56-150-8c-27 30-22 82 11 110c31 28 89 29 122-4c31-31 31-76 17-98Z"/>
+    <path d="M720 230c-50-42-118-44-164-7c-36 29-42 86-8 122c39 41 116 43 162 9c44-33 52-90 10-124Z"/>
+  </g>
+</svg>

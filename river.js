@@ -1,228 +1,141 @@
 function createRiverArt(container) {
-
   return new p5((p) => {
+    const W = 1200;
+    const H = 700;
+    const BLUE = [69, 138, 215];
+    const RED = [198, 40, 40];
+    const WHITE = [244, 248, 251];
+    let trash = [];
+    let branches = [];
 
-    let particles = [];
-    let cells = [];
+    p.setup = () => {
+      p.createCanvas(W, H);
+      p.frameRate(30);
 
-    p.setup = function () {
+      for (let i = 0; i < 9; i++) {
+        trash.push({
+          x: p.random(300, 900),
+          y: p.random(160, 600),
+          r: p.random(14, 27),
+          phase: p.random(p.TWO_PI)
+        });
+      }
 
-      const canvas =
-        p.createCanvas(900, 500);
-
-      canvas.parent(container);
-
-      p.pixelDensity(1);
-
-      createParticles();
-      createCells();
-
+      for (let i = 0; i < 18; i++) {
+        branches.push({
+          x: p.random(80, 1120),
+          y: p.random(120, 620),
+          len: p.random(70, 170),
+          angle: p.random(-.7, .7)
+        });
+      }
     };
 
-
-    p.draw = function () {
-
-      p.background("#06131C");
-
+    p.draw = () => {
+      p.background(7, 35, 59);
       drawGrid();
       drawRiver();
-      drawSecondaryRiver();
-      drawCells();
-      drawParticles();
-
+      drawBranches();
+      drawTrash();
+      drawData();
     };
 
-
     function drawGrid() {
-
-      p.stroke("#102B37");
+      p.stroke(255, 255, 255, 14);
       p.strokeWeight(1);
-
-      for (
-        let x = 0;
-        x < p.width;
-        x += 45
-      ) {
-
-        p.line(
-          x,
-          0,
-          x,
-          p.height
-        );
-
-      }
-
-
-      for (
-        let y = 0;
-        y < p.height;
-        y += 45
-      ) {
-
-        p.line(
-          0,
-          y,
-          p.width,
-          y
-        );
-
-      }
-
+      for (let x = 0; x < W; x += 50) p.line(x, 0, x, H);
+      for (let y = 0; y < H; y += 50) p.line(0, y, W, y);
     }
 
+    function riverWidth(y) {
+      return 125 + y * .32 + p.sin(y * .012) * 30;
+    }
+
+    function riverCenter(y) {
+      return W / 2 + p.sin(y * .009) * 170 + p.sin(y * .022) * 40;
+    }
 
     function drawRiver() {
-
-      p.noFill();
-      p.stroke("#458AD7");
-      p.strokeWeight(6);
-
-      p.beginShape();
-
-      for (
-        let x = 0;
-        x <= p.width;
-        x += 15
-      ) {
-
-        const y =
-          p.height / 2 +
-          p.sin(
-            x * 0.01
-          ) * 80;
-
-        p.curveVertex(
-          x,
-          y
-        );
-
-      }
-
-      p.endShape();
-
-    }
-
-
-    function drawSecondaryRiver() {
-
-      p.noFill();
-      p.stroke("#458AD7");
-      p.strokeWeight(2);
-
-      p.beginShape();
-
-      for (
-        let x = 0;
-        x <= p.width;
-        x += 15
-      ) {
-
-        const y =
-          p.height / 2 +
-          p.sin(
-            x * 0.014 + 2
-          ) * 65;
-
-        p.curveVertex(
-          x,
-          y
-        );
-
-      }
-
-      p.endShape();
-
-    }
-
-
-    function drawCells() {
-
-      p.noFill();
-      p.stroke("#458AD7");
-      p.strokeWeight(2);
-
-      for (const cell of cells) {
-
-        p.circle(
-          cell.x,
-          cell.y,
-          cell.size
-        );
-
-      }
-
-    }
-
-
-    function drawParticles() {
-
       p.noStroke();
-      p.fill("#458AD7");
+      p.fill(BLUE);
+      p.beginShape();
 
-      for (const particle of particles) {
+      for (let y = 0; y <= H; y += 20) {
+        const cx = riverCenter(y);
+        p.vertex(cx - riverWidth(y), y);
+      }
 
-        p.circle(
-          particle.x,
-          particle.y,
-          particle.size
-        );
+      for (let y = H; y >= 0; y -= 20) {
+        const cx = riverCenter(y);
+        p.vertex(cx + riverWidth(y), y);
+      }
 
+      p.endShape(p.CLOSE);
 
-        particle.x +=
-          particle.speed;
-
-
-        if (
-          particle.x >
-          p.width + 10
-        ) {
-
-          particle.x = -10;
-
-          particle.y =
-            p.height / 2 +
-            p.random(-100, 100);
-
+      p.noFill();
+      p.stroke(255, 255, 255, 80);
+      p.strokeWeight(2);
+      for (let i = 0; i < 9; i++) {
+        p.beginShape();
+        for (let y = 0; y <= H; y += 30) {
+          const cx = riverCenter(y) + p.sin(y * .02 + i) * 35;
+          p.curveVertex(cx, y);
         }
-
+        p.endShape();
       }
-
     }
 
+    function drawBranches() {
+      p.noFill();
+      p.stroke(BLUE[0], BLUE[1], BLUE[2], 110);
+      p.strokeWeight(4);
 
-    function createParticles() {
-
-      for (let i = 0; i < 70; i++) {
-
-        particles.push({
-          x: p.random(p.width),
-          y:
-            p.height / 2 +
-            p.random(-100, 100),
-          size: p.random(3, 7),
-          speed: p.random(0.3, 1.3)
-        });
-
+      for (const b of branches) {
+        p.beginShape();
+        p.vertex(b.x, b.y);
+        p.quadraticVertex(
+          b.x + p.cos(b.angle) * b.len * .5,
+          b.y + p.sin(b.angle) * b.len * .5,
+          b.x + p.cos(b.angle) * b.len,
+          b.y + p.sin(b.angle) * b.len
+        );
+        p.endShape();
       }
-
     }
 
+    function drawTrash() {
+      p.noStroke();
+      for (const item of trash) {
+        item.x += p.sin(p.frameCount * .018 + item.phase) * .25;
+        item.y += .35;
+        if (item.y > H + 30) item.y = 120;
 
-    function createCells() {
-
-      for (let i = 0; i < 10; i++) {
-
-        cells.push({
-          x: p.random(p.width),
-          y: p.random(p.height),
-          size: p.random(20, 55)
-        });
-
+        p.fill(RED);
+        p.circle(item.x, item.y, item.r * 1.5);
+        p.rect(item.x - item.r * .75, item.y - 3, item.r * 1.5, 6, 4);
       }
-
     }
 
-  });
+    function drawData() {
+      p.noStroke();
+      p.fill(WHITE);
+      p.textFont("monospace");
+      p.textSize(11);
+      p.text("RIVER / NODE 03", 32, 40);
+      p.text("DOWNSTREAM NETWORK", 32, 58);
+      p.text(`${trash.length.toString().padStart(2, "0")} POLLUTION POINTS`, 32, 80);
+      p.text("FLOW →", 1080, 660);
+      p.text("CLICK RED ELEMENTS", 950, 680);
+    }
 
+    p.mousePressed = () => {
+      for (let i = trash.length - 1; i >= 0; i--) {
+        if (p.dist(p.mouseX, p.mouseY, trash[i].x, trash[i].y) < trash[i].r * 1.7) {
+          trash.splice(i, 1);
+          if (trash.length === 0) window.markStageClean(2);
+          return;
+        }
+      }
+    };
+  }, container);
 }

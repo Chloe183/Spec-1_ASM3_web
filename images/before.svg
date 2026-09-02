@@ -1,0 +1,32 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 800" role="img" aria-label="Polluted water before intervention">
+  <defs>
+    <linearGradient id="bg" x1="0" x2="1" y1="0" y2="1">
+      <stop offset="0%" stop-color="#dfeaf5"/>
+      <stop offset="100%" stop-color="#b8d0df"/>
+    </linearGradient>
+    <linearGradient id="water" x1="0" x2="1">
+      <stop offset="0%" stop-color="#2B6FA5"/>
+      <stop offset="100%" stop-color="#0A2D4D"/>
+    </linearGradient>
+  </defs>
+  <rect width="1200" height="800" fill="url(#bg)"/>
+  <rect y="420" width="1200" height="380" fill="url(#water)" opacity="0.86"/>
+  <path d="M0 455C120 430 180 500 320 485C450 470 560 418 680 430C780 441 910 495 1200 470V800H0Z" fill="#0C3356" opacity="0.6"/>
+  <g fill="#c62828" opacity="0.95">
+    <rect x="170" y="520" width="54" height="16" rx="8"/>
+    <circle cx="430" cy="540" r="22"/>
+    <rect x="590" y="508" width="70" height="18" rx="8"/>
+    <circle cx="820" cy="560" r="18"/>
+    <rect x="930" y="530" width="62" height="16" rx="8"/>
+  </g>
+  <g fill="#ffffff" opacity="0.25">
+    <circle cx="90" cy="180" r="60"/>
+    <circle cx="230" cy="140" r="90"/>
+    <circle cx="1000" cy="210" r="76"/>
+  </g>
+  <g stroke="#ffffff" stroke-opacity="0.2" stroke-width="2">
+    <path d="M60 660C220 610 260 610 350 660" fill="none"/>
+    <path d="M400 680C570 620 630 620 760 680" fill="none"/>
+    <path d="M820 670C930 620 1010 630 1140 680" fill="none"/>
+  </g>
+</svg>
