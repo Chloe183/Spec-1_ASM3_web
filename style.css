@@ -19,7 +19,6 @@
   --green: #51f0b3;
   --red: #ff6b6b;
   --amber: #f7d66b;
-  --shadow: rgba(1, 10, 22, 0.7);
   --radius: 16px;
 }
 
@@ -34,17 +33,148 @@ body {
     linear-gradient(180deg, var(--bg-1) 0%, var(--bg-0) 100%);
   color: var(--text);
   font-family: "Inter", sans-serif;
-  transition: background 0.5s ease;
+  transition: background-color 0.8s ease, color 0.8s ease;
+}
+
+body.bright-mode .topbar,
+body.bright-mode .cta,
+body.bright-mode .panel,
+body.bright-mode .hero-network,
+body.bright-mode .metric-card,
+body.bright-mode .data-card,
+body.bright-mode .sidebar-data,
+body.bright-mode .art-instructions,
+body.bright-mode .stage-button,
+body.bright-mode .art-container,
+body.bright-mode .brand-mark {
+  transition: background-color 0.8s ease, border-color 0.8s ease, box-shadow 0.8s ease, color 0.8s ease;
+}
+
+.loading-screen {
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  display: grid;
+  place-items: center;
+  padding: 24px;
+  background:
+    radial-gradient(circle at 50% 42%, rgba(28, 108, 155, 0.28), transparent 35%),
+    #040d1a;
+  transition: opacity 0.6s ease, visibility 0.6s ease;
+}
+
+.loading-screen.hidden {
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+}
+
+.loading-screen-inner {
+  width: min(420px, 100%);
+  display: grid;
+  gap: 18px;
+  text-align: center;
+}
+
+.loading-kicker,
+.loading-status {
+  color: var(--muted);
+  font: 10px "Space Mono", monospace;
+  letter-spacing: 0.12em;
+}
+
+.loading-screen-inner strong {
+  color: var(--text);
+  font-family: "ohno-blazeface", sans-serif;
+  font-size: clamp(20px, 4vw, 30px);
+  font-style: normal;
+  font-weight: 100;
+  letter-spacing: 0.06em;
+}
+
+.loading-track {
+  height: 3px;
+  overflow: hidden;
+  background: rgba(89, 200, 255, 0.18);
+  border: 1px solid rgba(89, 200, 255, 0.3);
+}
+
+.loading-track span {
+  display: block;
+  width: 40%;
+  height: 100%;
+  background: var(--blue);
+  box-shadow: 0 0 14px var(--blue);
+  animation: loading-sweep 1.4s ease-in-out infinite;
+}
+
+.loading-status b {
+  color: var(--blue);
+  font-weight: 400;
+}
+
+@keyframes loading-sweep {
+  from { transform: translateX(-250%); }
+  to { transform: translateX(350%); }
+}
+
+@keyframes clean-mode-reveal {
+  0% { opacity: 0.35; transform: translateY(8px); }
+  100% { opacity: 1; transform: translateY(0); }
+}
+
+body.clean-mode-transition .hero-sensor-row,
+body.clean-mode-transition .hero-map-panel {
+  animation: clean-mode-reveal 0.8s ease both;
+}
+
+@keyframes water-flow-down {
+  from { background-position: 0 -90px; }
+  to { background-position: 0 0; }
+}
+
+@keyframes water-flow-across {
+  from { background-position: -90px 0; }
+  to { background-position: 0 0; }
+}
+
+@keyframes water-flow-l-right {
+  0% { left: calc(20% - 4px); top: calc(100% - 4px); }
+  45% { left: calc(20% - 4px); top: calc(100% + 28px); }
+  100% { left: calc(20% + 26px); top: calc(100% + 28px); }
+}
+
+@keyframes water-flow-l-left {
+  0% { right: calc(10% - 4px); top: calc(100% - 4px); }
+  45% { right: calc(10% - 4px); top: calc(100% + 28px); }
+  100% { right: calc(10% + 50px); top: calc(100% + 28px); }
+}
+
+@keyframes water-flow-sequence-right {
+  0% { opacity: 1; left: calc(20% - 4px); top: calc(100% - 4px); }
+  11% { opacity: 1; left: calc(20% - 4px); top: calc(100% + 28px); }
+  25% { opacity: 1; left: calc(20% + 26px); top: calc(100% + 28px); }
+  25.1%, 100% { opacity: 0; left: calc(20% + 26px); top: calc(100% + 28px); }
+}
+
+@keyframes water-flow-sequence-left {
+  0% { opacity: 1; right: calc(10% - 4px); top: calc(100% - 4px); }
+  11% { opacity: 1; right: calc(10% - 4px); top: calc(100% + 28px); }
+  25% { opacity: 1; right: calc(10% + 50px); top: calc(100% + 28px); }
+  25.1%, 100% { opacity: 0; right: calc(10% + 50px); top: calc(100% + 28px); }
 }
 
 body[data-status="polluted"] {
   --environment: var(--red);
   --environment-soft: rgba(255, 107, 107, 0.12);
+  background: #1C3857;
 }
 
 body[data-status="clean"] {
   --environment: var(--green);
   --environment-soft: rgba(81, 240, 179, 0.12);
+  background: #DDEDFF;
+  color: #12343b;
 }
 
 body.bright-mode {
@@ -68,25 +198,52 @@ body.bright-mode {
     linear-gradient(180deg, var(--bg-1) 0%, var(--bg-0) 100%);
 }
 
+body.bright-mode[data-status="clean"] {
+  background: #DDEDFF;
+}
+
 body.bright-mode .topbar,
-body.bright-mode .cta {
-  background: rgba(247, 255, 253, 0.92);
+body.bright-mode .cta,
+body.bright-mode .panel {
+  background: #ffffff;
+  border-color: rgba(28, 56, 87, 0.18);
+  box-shadow: 0 18px 28px rgba(28, 56, 87, 0.1);
 }
 
 body.bright-mode .brand-mark {
-  background: linear-gradient(180deg, #b7e7de, #8dd2c6);
+  background: #ffffff;
   color: #12343b;
 }
 
 body.bright-mode .hero-network {
-  background: linear-gradient(180deg, rgba(224, 248, 243, 0.94), rgba(205, 237, 232, 0.98));
+  background: #ffffff;
 }
 
 body.bright-mode .metric-card,
 body.bright-mode .data-card,
 body.bright-mode .sidebar-data,
-body.bright-mode .art-instructions {
-  background: rgba(255, 255, 255, 0.72);
+body.bright-mode .art-instructions,
+body.bright-mode .stage-button {
+  background: #ffffff;
+  border-color: rgba(28, 56, 87, 0.16);
+}
+
+body.bright-mode .stage-button:hover,
+body.bright-mode .stage-button.active,
+body.bright-mode .stage-button.clean {
+  background: #ffffff;
+}
+
+body.bright-mode .art-container {
+  background: #ffffff;
+  border-color: rgba(28, 56, 87, 0.16);
+}
+
+body.bright-mode[data-status="clean"] .stage-button,
+body.bright-mode[data-status="clean"] .stage-button.active,
+body.bright-mode[data-status="clean"] .stage-button.clean {
+  background: #ffffff !important;
+  border-color: rgba(28, 56, 87, 0.2) !important;
 }
 
 body.bright-mode .brand-title,
@@ -100,6 +257,15 @@ body.bright-mode .action-list,
 body.bright-mode .sidebar-data strong,
 body.bright-mode .sensor-gauge span {
   color: var(--text);
+}
+
+body.bright-mode[data-status="clean"] .sensor-gauge span,
+body.bright-mode[data-status="clean"] .sensor-meta strong {
+  color: #edf6ff;
+}
+
+body.bright-mode[data-status="clean"] .sensor-meta small {
+  color: #8baec8;
 }
 
 body.bright-mode .topbar .eyebrow,
@@ -288,11 +454,20 @@ main {
   padding: 14px 10px 10px 6px;
 }
 
+.hero-copy h1,
+.art-panel h2,
+.section-heading h2,
+.cta h2 {
+  font-family: "ohno-blazeface", sans-serif;
+  font-style: normal;
+  font-weight: 100;
+}
+
 .hero-copy h1 {
   margin: 18px 0 12px;
   font-size: clamp(30px, 3vw, 52px);
   line-height: 0.95;
-  letter-spacing: -0.06em;
+  letter-spacing: 0;
   color: #f4fbff;
 }
 
@@ -551,9 +726,9 @@ main {
 
 .monitor-section {
   display: grid;
-  grid-template-columns: 300px minmax(0, 1fr);
+  grid-template-columns: 360px minmax(0, 1fr);
   gap: 18px;
-  align-items: start;
+  align-items: stretch;
 }
 
 .panel {
@@ -565,6 +740,7 @@ main {
 
 .stage-sidebar {
   overflow: hidden;
+  height: 100%;
 }
 
 .panel-head {
@@ -594,6 +770,182 @@ main {
   color: var(--text);
   border-bottom: 1px solid rgba(145, 191, 239, 0.08);
   transition: background 0.2s ease, border-color 0.2s ease;
+}
+
+#stageNav {
+  position: relative;
+}
+
+#stageNav::before,
+#stageNav::after {
+  content: "";
+  position: absolute;
+  left: 32px;
+  top: 35px;
+  bottom: 35px;
+  z-index: 0;
+  border-radius: 999px;
+  pointer-events: none;
+}
+
+#stageNav::before {
+  width: 7px;
+  background: rgba(89, 200, 255, 0.14);
+  border: 1px solid rgba(89, 200, 255, 0.3);
+  box-shadow: inset 0 0 8px rgba(0, 0, 0, 0.28), 0 0 10px rgba(89, 200, 255, 0.08);
+}
+
+#stageNav::after {
+  left: 35px;
+  width: 2px;
+  background: linear-gradient(180deg, transparent, var(--blue), transparent);
+  background-size: 100% 90px;
+  animation: water-flow-down 1.2s linear infinite;
+}
+
+.stage-button {
+  position: relative;
+  z-index: 1;
+}
+
+.flow-direction {
+  padding: 12px 18px 10px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  color: var(--blue);
+  font: 700 8px "Space Mono", monospace;
+  letter-spacing: 0.05em;
+  white-space: nowrap;
+  overflow: hidden;
+  border-bottom: 1px solid rgba(145, 191, 239, 0.12);
+}
+
+.flow-direction span {
+  color: var(--muted);
+}
+
+.flow-direction i {
+  color: var(--blue);
+  font-style: normal;
+}
+
+#stageNav {
+  display: flex;
+  flex-direction: column;
+  gap: 28px;
+  padding: 10px 18px 26px;
+  overflow: visible;
+}
+
+#stageNav::before,
+#stageNav::after {
+  display: none;
+}
+
+.flow-direction {
+  display: none;
+}
+
+.stage-button,
+.stage-button:nth-child(even) {
+  width: 76%;
+  min-height: 78px;
+  padding: 12px 12px 12px 10px;
+  grid-template-columns: 38px 1fr;
+  gap: 10px;
+  align-self: flex-start;
+  border: 1px solid rgba(89, 200, 255, 0.3);
+  border-radius: 14px;
+  background: rgba(8, 29, 47, 0.9);
+  box-shadow: inset 0 0 18px rgba(47, 144, 205, 0.06), 0 8px 18px rgba(0, 0, 0, 0.12);
+}
+
+.stage-button:nth-child(even) {
+  align-self: flex-end;
+}
+
+.stage-button:not(:last-child)::after {
+  content: "";
+  position: absolute;
+  top: 100%;
+  width: 62px;
+  height: 32px;
+  background: transparent;
+  border-bottom: 6px solid rgba(89, 200, 255, 0.34);
+  border-radius: 0 0 12px 12px;
+  pointer-events: none;
+}
+
+.stage-button:nth-child(odd):not(:last-child)::after {
+  left: 20%;
+  width: 30px;
+  border-left: 6px solid rgba(89, 200, 255, 0.34);
+}
+
+.stage-button:nth-child(even):not(:last-child)::after {
+  right: 10%;
+  width: 54px;
+  border-right: 6px solid rgba(89, 200, 255, 0.34);
+}
+
+.stage-button:not(:last-child)::before {
+  content: "";
+  position: absolute;
+  z-index: 2;
+  top: calc(100% - 4px);
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--blue);
+  box-shadow: 0 0 10px 3px rgba(89, 200, 255, 0.65);
+  pointer-events: none;
+}
+
+.stage-button:nth-child(odd):not(:last-child)::before {
+  left: calc(20% - 4px);
+  animation: water-flow-l-right 1.3s linear infinite;
+}
+
+.stage-button:nth-child(even):not(:last-child)::before {
+  right: calc(10% - 4px);
+  animation: water-flow-l-left 1.3s linear infinite;
+}
+
+.stage-button:nth-child(1):not(:last-child)::before,
+.stage-button:nth-child(3):not(:last-child)::before {
+  left: calc(20% - 4px);
+  right: auto;
+  animation: water-flow-sequence-right 5.2s linear infinite;
+}
+
+.stage-button:nth-child(2):not(:last-child)::before {
+  left: auto;
+  right: calc(10% - 4px);
+  animation: water-flow-sequence-left 5.2s linear 1.3s infinite;
+}
+
+.stage-button:nth-child(3):not(:last-child)::before {
+  animation-delay: 2.6s;
+}
+
+.stage-number {
+  width: 34px;
+  height: 34px;
+  display: grid;
+  place-items: center;
+  border: 2px solid var(--blue);
+  border-radius: 50%;
+  color: var(--blue);
+}
+
+.stage-name {
+  align-self: center;
+  line-height: 1.25;
+}
+
+.stage-state {
+  grid-column: 2;
 }
 
 .stage-button:hover {
@@ -657,6 +1009,7 @@ main {
 
 .art-panel {
   overflow: hidden;
+  height: 100%;
 }
 
 .art-panel .panel-head {
@@ -666,7 +1019,7 @@ main {
 .art-panel h2 {
   margin: 6px 0 0;
   font-size: 28px;
-  letter-spacing: -0.04em;
+  letter-spacing: 0;
   color: #f0faff;
 }
 
@@ -738,7 +1091,7 @@ main {
   margin: 8px 0 0;
   font-size: clamp(30px, 4vw, 52px);
   line-height: 0.96;
-  letter-spacing: -0.06em;
+  letter-spacing: 0;
   color: #edf9ff;
 }
 
@@ -961,9 +1314,51 @@ main {
     grid-template-columns: repeat(4, 1fr);
   }
 
+  #stageNav::before,
+  #stageNav::after {
+    left: 12.5%;
+    right: 12.5%;
+    top: 35px;
+    bottom: auto;
+    width: auto;
+    height: 7px;
+  }
+
+  #stageNav::after {
+    top: 37px;
+    bottom: auto;
+    height: 3px;
+    background: linear-gradient(90deg, transparent, var(--blue), transparent);
+    background-size: 90px 100%;
+    animation-name: water-flow-across;
+  }
+
+  .flow-direction {
+    justify-content: center;
+    font-size: 7px;
+  }
+
   .stage-button {
+    width: 100%;
+    min-height: 70px;
+    padding: 12px 18px;
     grid-template-columns: 1fr;
     gap: 5px;
+    align-self: stretch;
+    border: 0;
+    border-radius: 0;
+    background: transparent;
+    box-shadow: none;
+  }
+
+  .stage-button:nth-child(even) {
+    align-self: stretch;
+  }
+
+  .stage-button:not(:last-child)::after,
+  .stage-button:not(:last-child)::before,
+  .stage-number {
+    display: none;
   }
 
   .stage-state {
