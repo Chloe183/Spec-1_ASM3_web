@@ -1,7 +1,7 @@
 function createCanalArt(container) {
   return new p5((p) => {
-    const W = 1200;
-    const H = 700;
+    const W = 1920;
+    const H = 1080;
     const BLUE = [69, 138, 215];
     const RED = [198, 40, 40];
     const WHITE = [244, 248, 251];
@@ -10,7 +10,11 @@ function createCanalArt(container) {
 
     p.setup = () => {
       p.createCanvas(W, H);
+      p.resizeCanvas(W, H);
+      p.pixelDensity(1);
       p.frameRate(30);
+      p.canvas.width = W;
+      p.canvas.height = H;
 
       for (let i = 0; i < 7; i++) {
         trash.push({
@@ -19,6 +23,10 @@ function createCanalArt(container) {
           r: p.random(18, 32),
           seed: p.random(1000)
         });
+      }
+
+      if (window.stageCleanState && window.stageCleanState[1]) {
+        trash.length = 0;
       }
 
       for (let i = 0; i < 90; i++) {
@@ -43,19 +51,23 @@ function createCanalArt(container) {
     function drawGrid() {
       p.stroke(255, 255, 255, 14);
       p.strokeWeight(1);
+
       for (let x = 0; x < W; x += 50) p.line(x, 0, x, H);
       for (let y = 0; y < H; y += 50) p.line(0, y, W, y);
     }
 
     function bankPath(side) {
       const points = [];
+
       for (let y = 0; y <= H; y += 35) {
         const wave = p.sin(y * .012 + side) * 45 + p.sin(y * .028) * 20;
+
         points.push({
           x: side === 0 ? 300 + wave : 900 + wave,
           y
         });
       }
+
       return points;
     }
 
@@ -83,23 +95,29 @@ function createCanalArt(container) {
       p.noStroke();
       p.fill(BLUE);
       p.beginShape();
+
       for (let y = 0; y <= H; y += 20) {
         const left = 315 + p.sin(y * .012) * 45 + p.sin(y * .028) * 20;
         const right = 885 + p.sin(y * .012 + 2) * 45 + p.sin(y * .028) * 20;
+
         p.vertex(left, y);
         p.vertex(right, y);
       }
+
       p.endShape();
     }
 
     function drawParticles() {
       p.noStroke();
       p.fill(255, 255, 255, 100);
+
       for (const pt of particles) {
         pt.y += pt.s;
         if (pt.y > H) pt.y = 170;
+
         const left = 315 + p.sin(pt.y * .012) * 45 + p.sin(pt.y * .028) * 20;
         const right = 885 + p.sin(pt.y * .012 + 2) * 45 + p.sin(pt.y * .028) * 20;
+
         pt.x = p.constrain(pt.x, left + 15, right - 15);
         p.circle(pt.x, pt.y, pt.s * 2);
       }
@@ -107,8 +125,10 @@ function createCanalArt(container) {
 
     function drawTrash() {
       p.noStroke();
+
       for (const item of trash) {
         item.y += p.sin(p.frameCount * .02 + item.seed) * .15;
+
         p.push();
         p.translate(item.x, item.y);
         p.rotate(p.sin(p.frameCount * .02 + item.seed) * .2);
@@ -134,7 +154,11 @@ function createCanalArt(container) {
       for (let i = trash.length - 1; i >= 0; i--) {
         if (p.dist(p.mouseX, p.mouseY, trash[i].x, trash[i].y) < trash[i].r * 1.6) {
           trash.splice(i, 1);
-          if (trash.length === 0) window.markStageClean(1);
+
+          if (trash.length === 0 && window.markStageClean) {
+            window.markStageClean(1);
+          }
+
           return;
         }
       }

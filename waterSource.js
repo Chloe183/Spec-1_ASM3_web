@@ -1,7 +1,7 @@
 function createWaterSourceArt(container) {
   return new p5((p) => {
-    const W = 1200;
-    const H = 700;
+    const W = 1920;
+    const H = 1080;
     const BLUE = [69, 138, 215];
     const RED = [198, 40, 40];
     const WHITE = [244, 248, 251];
@@ -10,7 +10,11 @@ function createWaterSourceArt(container) {
 
     p.setup = () => {
       p.createCanvas(W, H);
+      p.resizeCanvas(W, H);
+      p.pixelDensity(1);
       p.frameRate(30);
+      p.canvas.width = W;
+      p.canvas.height = H;
 
       for (let i = 0; i < 6; i++) {
         const a = (p.TWO_PI / 6) * i;
@@ -20,6 +24,10 @@ function createWaterSourceArt(container) {
           r: 22,
           angle: a
         });
+      }
+
+      if (window.stageCleanState && window.stageCleanState[3]) {
+        trash.length = 0;
       }
 
       for (let i = 0; i < 7; i++) {
@@ -76,13 +84,28 @@ function createWaterSourceArt(container) {
       p.fill(BLUE);
       p.beginShape();
       p.vertex(W / 2, H / 2 + 100);
-      p.bezierVertex(W / 2 - 150, H / 2, W / 2 - 100, H / 2 - 130, W / 2, H / 2 - 40);
-      p.bezierVertex(W / 2 + 100, H / 2 - 130, W / 2 + 150, H / 2, W / 2, H / 2 + 100);
+      p.bezierVertex(
+        W / 2 - 150,
+        H / 2,
+        W / 2 - 100,
+        H / 2 - 130,
+        W / 2,
+        H / 2 - 40
+      );
+      p.bezierVertex(
+        W / 2 + 100,
+        H / 2 - 130,
+        W / 2 + 150,
+        H / 2,
+        W / 2,
+        H / 2 + 100
+      );
       p.endShape();
     }
 
     function drawTrash() {
       p.noStroke();
+
       for (const item of trash) {
         item.angle += .003;
         item.x = W / 2 + Math.cos(item.angle) * 190;
@@ -111,7 +134,11 @@ function createWaterSourceArt(container) {
       for (let i = trash.length - 1; i >= 0; i--) {
         if (p.dist(p.mouseX, p.mouseY, trash[i].x, trash[i].y) < trash[i].r * 1.8) {
           trash.splice(i, 1);
-          if (trash.length === 0) window.markStageClean(3);
+
+          if (trash.length === 0 && window.markStageClean) {
+            window.markStageClean(3);
+          }
+
           return;
         }
       }

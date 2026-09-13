@@ -10,7 +10,7 @@
   <style>
     @import url("https://use.typekit.net/adj6vsr.css");
   </style>
-  <link rel="stylesheet" href="style.css?v=20260902">
+  <link rel="stylesheet" href="style.css?v=20260912-art-1920">
 </head>
 <body data-status="polluted">
 
@@ -39,74 +39,119 @@
   </header>
 
   <main>
-    <section class="hero page-grid">
-      <div class="hero-copy">
-        <p class="eyebrow">WATER SYSTEM / LIVE VISUALISATION</p>
-        <h1>KEEP CLEAN<br><span>WATER CLEAN.</span></h1>
-        <p class="hero-text">
-          Protect the first drop before it becomes polluted.
-          Follow the path from the storm drain to the water source.
-        </p>
-        <div class="hero-metrics">
-          <div class="metric-card">
-            <span class="metric-label">STAGES CLEAN</span>
-            <strong id="cleanCount">0 / 4</strong>
-          </div>
-          <div class="metric-card">
-            <span class="metric-label">SYSTEM STATUS</span>
-            <strong id="systemState">AT RISK</strong>
-          </div>
-        </div>
-      </div>
-
-      <div class="hero-network">
-        <div class="hero-monitor-frame">
-          <div class="hero-sensor-row">
-            <div class="hero-sensor-card">
-              <div class="sensor-gauge gauge-red">
-                <span>PH</span>
-              </div>
-              <div class="sensor-meta">
-                <small>PH</small>
-                <strong id="phValue">5.8</strong>
-              </div>
+    <div class="page page-home active" id="page-home">
+      <section class="hero page-grid home-hero-layout">
+        <div class="hero-copy">
+          <p class="eyebrow">WATER SYSTEM / LIVE VISUALISATION</p>
+          <h1>PROTECT THE<br><span>FIRST DROP.</span></h1>
+          <p class="hero-text">
+            Pollution should be prevented before it occurs.
+            Follow the path from the storm drain to the water source.
+          </p>
+          <div class="hero-metrics">
+            <div class="metric-card">
+              <span class="metric-label">STAGES CLEAN</span>
+              <strong id="cleanCount">0 / 4</strong>
             </div>
-            <div class="hero-sensor-card">
-              <div class="sensor-gauge gauge-green">
-                <span>DO</span>
-              </div>
-              <div class="sensor-meta">
-                <small>DO</small>
-                <strong id="doValue">2.1 mg/L</strong>
-              </div>
+            <div class="metric-card">
+              <span class="metric-label">SYSTEM STATUS</span>
+              <strong id="systemState">AT RISK</strong>
             </div>
-            <div class="hero-sensor-card">
-              <div class="sensor-gauge gauge-blue">
-                <span>Temp</span>
-              </div>
-              <div class="sensor-meta">
-                <small>Temp</small>
-                <strong id="tempValue">32°C</strong>
-              </div>
-            </div>
-          </div>
-
-          <div class="hero-map-panel">
-            <div class="hero-after-card" id="afterCard">
-              <div class="photo-label hero-after-label">
-                <strong id="afterStatus">LOCKED — CLEAN ALL 4 NODES</strong>
-              </div>
-              <div class="hero-after-image-wrap after-photo">
-                <img id="afterImage" src="images/before.svg" alt="Clean water after intervention">
-              </div>
-              <div class="hero-after-status" id="afterLock">04 NODES REQUIRED</div>
-            </div>
+            <button class="start-clean-button" type="button" data-target="page-water">
+              START TO CLEAN
+            </button>
           </div>
         </div>
-      </div>
-    </section>
 
-    <section class="monitor-section page-grid">
+        <div class="hero-network">
+          <div class="hero-monitor-frame">
+            <div class="hero-sensor-row">
+              <div class="hero-sensor-card">
+                <div class="sensor-gauge gauge-red">
+                  <img src="images/Asset 4.png" alt="pH sensor">
+                </div>
+                <div class="sensor-meta">
+                  <small>PH</small>
+                  <strong id="phValue">5.8</strong>
+                </div>
+              </div>
+              <div class="hero-sensor-card">
+                <div class="sensor-gauge gauge-green">
+                  <img src="images/Asset 3.png" alt="DO sensor">
+                </div>
+                <div class="sensor-meta">
+                  <small>DO</small>
+                  <strong id="doValue">2.1 mg/L</strong>
+                </div>
+              </div>
+              <div class="hero-sensor-card">
+                <div class="sensor-gauge gauge-blue">
+                  <img src="images/Asset 2.png" alt="Temperature sensor">
+                </div>
+                <div class="sensor-meta">
+                  <small>Temp</small>
+                  <strong id="tempValue">32°C</strong>
+                </div>
+              </div>
+            </div>
+
+            <div class="hero-map-panel">
+              <div class="hero-after-card" id="afterCard">
+                <div class="photo-label hero-after-label">
+                  <strong id="afterStatus">LOCKED — CLEAN ALL 4 NODES</strong>
+                </div>
+                <div class="hero-after-image-wrap after-photo">
+                  <img id="afterImage" src="images/before.svg" alt="Clean water after intervention">
+                  <span class="after-risk-text">AT RISK</span>
+                </div>
+                <div class="hero-after-status" id="afterLock">04 NODES REQUIRED</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <aside class="stage-sidebar panel home-monitor-panel">
+          <div class="panel-head">
+            <span>MONITOR / 04 NODES</span>
+            <span id="homeProgress">00%</span>
+          </div>
+          <div class="flow-direction" aria-label="Water flows from storm drain to canal to river to source">
+            <span>STORM DRAIN</span><i aria-hidden="true">→</i><span>CANAL</span><i aria-hidden="true">→</i><span>RIVER</span><i aria-hidden="true">→</i><span>WATER SOURCE</span>
+          </div>
+          <nav class="home-stage-nav" aria-label="Monitoring stages">
+            <button class="stage-button active" data-stage="0">
+              <span class="stage-number">01</span>
+              <span class="stage-name">STORM DRAIN</span>
+              <span class="stage-state" data-state="0">POLLUTED</span>
+            </button>
+            <button class="stage-button" data-stage="1">
+              <span class="stage-number">02</span>
+              <span class="stage-name">CANAL</span>
+              <span class="stage-state" data-state="1">POLLUTED</span>
+            </button>
+            <button class="stage-button" data-stage="2">
+              <span class="stage-number">03</span>
+              <span class="stage-name">RIVER</span>
+              <span class="stage-state" data-state="2">POLLUTED</span>
+            </button>
+            <button class="stage-button" data-stage="3">
+              <span class="stage-number">04</span>
+              <span class="stage-name">DOMESTIC WATER</span>
+              <span class="stage-state" data-state="3">POLLUTED</span>
+            </button>
+          </nav>
+
+          <div class="sidebar-data">
+            <span class="eyebrow">CURRENT NODE</span>
+            <strong>STORM DRAIN</strong>
+            <p>Rain carries litter from streets into storm drains, creating the first entry point for pollution.</p>
+          </div>
+        </aside>
+      </section>
+    </div>
+
+    <div class="page page-water" id="page-water">
+      <section class="monitor-section page-grid">
       <aside class="stage-sidebar panel">
         <div class="panel-head">
           <span>MONITOR / 04 NODES</span>
@@ -133,7 +178,7 @@
           </button>
           <button class="stage-button" data-stage="3">
             <span class="stage-number">04</span>
-            <span class="stage-name">WATER SOURCE</span>
+            <span class="stage-name">DOMESTIC WATER</span>
             <span class="stage-state" data-state="3">POLLUTED</span>
           </button>
         </nav>
@@ -166,88 +211,170 @@
           <p>Click the red pollution elements to remove them. Clean every node to restore the water source.</p>
         </div>
       </section>
-    </section>
+      </section>
+    </div>
 
-    <section class="data-section page-grid">
-      <div class="section-heading">
-        <p class="eyebrow">WATER SYSTEM / DATA</p>
-        <h2>WHY THE FIRST DROP MATTERS</h2>
-      </div>
+<div class="page page-data" id="page-data">
+  <section class="data-section page-grid">
+    <div class="section-heading">
+      <p class="eyebrow">WATER SYSTEM / DATA</p>
+      <h2>WHY THE FIRST DROP MATTERS</h2>
+    </div>
 
-      <div class="data-grid">
-        <article class="data-card large">
-          <span class="data-index">01 / LAND → WATER</span>
+    <div class="data-grid">
+
+      <!-- 01 / GLOBAL -->
+      <article class="data-card large">
+        <span class="data-index">01 / GLOBAL</span>
+
+        <div class="data-main-stat">
           <strong>80%</strong>
-          <p>of marine plastic pollution originates from land-based sources and is carried into waterways through rivers and stormwater systems.</p>
-        </article>
+          <span>OF MARINE PLASTIC POLLUTION ORIGINATES FROM LAND-BASED SOURCES AND ENTERS WATERWAYS THROUGH RIVERS AND STORMWATER SYSTEMS.</span>
+        </div>
 
-        <article class="data-card">
-          <span class="data-index">02 / VIETNAM</span>
-          <strong>94%</strong>
-          <p>of waste found at Vietnamese river and coastal survey sites is plastic.</p>
-        </article>
+        <small>SOURCE / UNEP, 2023</small>
+      </article>
 
-        <article class="data-card">
-          <span class="data-index">03 / GLOBAL</span>
-          <strong>1M+</strong>
-          <p>plastic bottles are bought around the world every minute.</p>
-        </article>
+      <!-- 02 / VIETNAM -->
+      <article class="data-card">
+        <span class="data-index">02 / VIETNAM</span>
 
-        <article class="data-card">
-          <span class="data-index">04 / VIETNAM</span>
-          <strong>1.8M t</strong>
-          <p>of plastic waste is produced in Vietnam each year, while only about 27% is recycled or reused.</p>
-        </article>
+        <div class="data-main-stat">
+          <strong>TOP 10</strong>
+          <span>COUNTRIES CONTRIBUTING TO PLASTIC POLLUTION WORLDWIDE.</span>
+        </div>
+      </article>
 
-        <article class="data-card chart-card">
-          <div class="chart-head">
-            <span>PLASTIC WASTE / RECOVERY</span>
-            <span>27%</span>
+      <!-- 03 / WASTE -->
+      <article class="data-card">
+        <span class="data-index">03 / WASTE</span>
+
+        <div class="data-stat-list">
+          <div class="data-stat-row">
+            <strong>75%</strong>
+            <span>OF SOLID WASTE IS MISMANAGED.</span>
           </div>
-          <div class="bar"><span style="width:27%"></span></div>
-          <div class="chart-legend">
-            <span>RECYCLED / REUSED</span>
-            <span>OTHER WASTE</span>
-          </div>
-        </article>
 
-        <article class="data-card chart-card">
-          <div class="chart-head">
-            <span>SYSTEM FLOW</span>
-            <span>01 → 04</span>
+          <div class="data-stat-row">
+            <strong>&lt;30%</strong>
+            <span>OF PLASTIC WASTE IS RECYCLED.</span>
           </div>
-          <div class="flow-chart">
-            <span>STORM DRAIN</span>
-            <i></i>
-            <span>CANAL</span>
-            <i></i>
-            <span>RIVER</span>
-            <i></i>
-            <span>WATER SOURCE</span>
+        </div>
+      </article>
+
+      <!-- 04 / MARINE LITTER -->
+      <article class="data-card">
+        <span class="data-index">04 / MARINE LITTER</span>
+
+        <div class="data-main-stat">
+          <strong>80%</strong>
+          <span>OF MARINE LITTER IS PLASTIC.</span>
+        </div>
+
+        <small>SOURCE / WORLD BANK, 2024</small>
+      </article>
+
+      <!-- 05 / WATER POLLUTION / HEALTH -->
+      <article class="data-card chart-card">
+        <div class="chart-head">
+          <span>WATER POLLUTION / HEALTH</span>
+          <span>YEARLY</span>
+        </div>
+
+        <div class="health-stats">
+
+          <div class="data-stat-row">
+            <strong>9,000</strong>
+            <span>DEATHS / YEAR</span>
           </div>
-        </article>
+
+          <div class="data-stat-row">
+            <strong>200,000</strong>
+            <span>CANCER CASES</span>
+          </div>
+
+        </div>
+
+        <p class="chart-note">
+          Linked to polluted water and poor sanitation.
+        </p>
+
+        <small>SOURCE / VIETNAM MOH + MONRE</small>
+      </article>
+
+      <!-- 06 / POLLUTED WATER / DISEASE -->
+      <article class="data-card chart-card">
+        <div class="chart-head">
+          <span>POLLUTED WATER / DISEASE</span>
+          <span>05 TYPES</span>
+        </div>
+
+        <div class="disease-list">
+          <span>CHOLERA</span>
+          <span>TYPHOID</span>
+          <span>SKIN DISEASES</span>
+          <span>RESPIRATORY ILLNESSES</span>
+          <span>CANCER</span>
+        </div>
+      </article>
+
+    </div>
+  </section>
+</div>
+
+    <div class="page page-cta" id="page-cta">
+  <section class="cta page-grid">
+
+    <div class="cta-heading">
+      <p class="eyebrow">ACTION / TODAY</p>
+      <h2>REDUCE ONE POLLUTANT<br>BEFORE IT REACHES WATER.</h2>
+      <span class="cta-subtitle">SMALL ACTIONS / DIRECT IMPACT</span>
+    </div>
+
+    <div class="action-list">
+
+      <div class="action-item">
+        <span>01</span>
+        <p>Pick up one piece of litter near a drain.</p>
       </div>
-    </section>
 
-    <section class="cta page-grid">
-      <div>
-        <p class="eyebrow">ACTION / TODAY</p>
-        <h2>REDUCE ONE POLLUTANT BEFORE IT REACHES WATER.</h2>
+      <div class="action-item">
+        <span>02</span>
+        <p>Bring a reusable water bottle.</p>
       </div>
-      <div class="action-list">
-        <div><span>01</span> Pick up one piece of litter near a drain.</div>
-        <div><span>02</span> Bring a reusable water bottle.</div>
-        <div><span>03</span> Never pour cooking oil into the sink.</div>
-        <div><span>04</span> Dispose of rubbish properly after rain.</div>
-        <div><span>05</span> Reduce single-use plastics.</div>
+
+      <div class="action-item">
+        <span>03</span>
+        <p>Never pour cooking oil into the sink.</p>
       </div>
-    </section>
+
+      <div class="action-item">
+        <span>04</span>
+        <p>Dispose of rubbish properly after rain.</p>
+      </div>
+
+      <div class="action-item">
+        <span>05</span>
+        <p>Reduce single-use plastics.</p>
+      </div>
+
+    </div>
+
+  </section>
+</div>
   </main>
 
   <footer class="footer">
     <span>SDG 06 / CLEAN WATER AND SANITATION</span>
     <strong>PROTECT THE FIRST DROP.</strong>
   </footer>
+
+  <nav class="bottom-nav" id="bottomNav" aria-label="Primary">
+    <button class="nav-button active" data-target="page-home">Home</button>
+    <button class="nav-button" data-target="page-water">Water System</button>
+    <button class="nav-button" data-target="page-data">Data</button>
+    <button class="nav-button" data-target="page-cta">Action</button>
+  </nav>
 
   <div class="completion-popup" id="completionPopup" role="status" aria-live="polite" aria-hidden="true">
     <div class="completion-popup-inner">
@@ -258,159 +385,455 @@
   </div>
 
   <script src="https://cdn.jsdelivr.net/npm/p5@1.11.13/lib/p5.js"></script>
-  <script src="stormDrain.js"></script>
-  <script src="canal.js"></script>
-  <script src="river.js"></script>
-  <script src="waterSource.js"></script>
+  <script src="stormDrain.js?v=20260912-art-1920"></script>
+  <script src="canal.js?v=20260912-art-1920"></script>
+  <script src="river.js?v=20260912-art-1920"></script>
+  <script src="waterSource.js?v=20260912-art-1920"></script>
 
-  <script>
-    const stageData = [
-      {
-        title: "STORM DRAIN",
-        description: "Rain carries litter from streets into storm drains, creating the first entry point for pollution."
-      },
-      {
-        title: "CANAL",
-        description: "Polluted water travels through canals, allowing litter and contaminants to move deeper into the system."
-      },
-      {
-        title: "RIVER",
-        description: "Rivers connect local pollution to larger water systems and spread contamination downstream."
-      },
-      {
-        title: "WATER SOURCE",
-        description: "The final source represents the vital heart of the system. Pollution here affects the entire water network."
-      }
-    ];
+<script>
+const stageData = [
+  {
+    title: "STORM DRAIN",
+    description: "Rain carries litter from streets into storm drains, creating the first entry point for pollution."
+  },
+  {
+    title: "CANAL",
+    description: "Polluted water travels through canals, allowing litter and contaminants to move deeper into the system."
+  },
+  {
+    title: "RIVER",
+    description: "Rivers connect local pollution to larger water systems and spread contamination downstream."
+  },
+  {
+    title: "WATER SOURCE",
+    description: "The final source represents the vital heart of the system. Pollution here affects the entire water network."
+  }
+];
 
-    const artworkCreators = [
-      createStormDrainArt,
-      createCanalArt,
-      createRiverArt,
-      createWaterSourceArt
-    ];
+const artworkCreators = [
+  createStormDrainArt,
+  createCanalArt,
+  createRiverArt,
+  createWaterSourceArt
+];
 
-    const stageCleanState = [false, false, false, false];
-    let currentStage = 0;
-    let currentArtwork = null;
-    let completionPopupShown = false;
-    let brightModeEnabled = false;
+const stageCleanState = [false, false, false, false];
 
-    const beforeImage = "images/before.svg";
-    const cleanImage = "images/after.svg";
+let currentStage = 0;
+let currentArtwork = null;
+let completionPopupShown = false;
+let brightModeEnabled = false;
+let systemStarted = false;
+let systemCompleted = false;
 
-    function mountArtworkToContainer(container, instance) {
-      if (!instance || !instance.canvas) return;
+const beforeImage = "images/before.svg";
+const cleanImage = "images/after.svg";
 
-      const canvas = instance.canvas;
-      if (canvas.parentElement !== container) {
-        container.innerHTML = "";
-        container.appendChild(canvas);
-      }
+function mountArtworkToContainer(container, instance) {
+  if (!instance || !instance.canvas) return;
+
+  const canvas = instance.canvas;
+
+  if (canvas.parentElement !== container) {
+    container.innerHTML = "";
+    container.appendChild(canvas);
+  }
+}
+
+function loadArtwork(index) {
+  if (currentArtwork) {
+    currentArtwork.remove();
+    currentArtwork = null;
+  }
+
+  const container = document.getElementById("artContainer");
+
+  if (!container) return;
+
+  container.innerHTML = "";
+
+  currentArtwork = artworkCreators[index](container);
+
+  mountArtworkToContainer(container, currentArtwork);
+
+  currentStage = index;
+
+  updateUI();
+}
+
+function markStageClean(index) {
+  if (stageCleanState[index]) return;
+
+  stageCleanState[index] = true;
+
+  updateUI();
+}
+
+/* Make these available to the four p5 artwork files */
+window.markStageClean = markStageClean;
+window.stageCleanState = stageCleanState;
+
+function updateUI() {
+  const cleanCount = stageCleanState.filter(Boolean).length;
+  const allClean = cleanCount === 4;
+  const stageIsClean = stageCleanState[currentStage];
+
+  const progress = `${Math.round(cleanCount / 4 * 100)
+    .toString()
+    .padStart(2, "0")}%`;
+
+  /* =========================
+     GLOBAL / HOME INFORMATION
+     ========================= */
+
+  const cleanCountElement = document.getElementById("cleanCount");
+
+  if (cleanCountElement) {
+    cleanCountElement.textContent = `${cleanCount} / 4`;
+  }
+
+  const systemStateElement = document.getElementById("systemState");
+
+  if (systemStateElement) {
+    systemStateElement.textContent = systemCompleted ? "SAFE" : "AT RISK";
+  }
+
+  const globalStatusElement = document.getElementById("globalStatus");
+
+  if (globalStatusElement) {
+    globalStatusElement.textContent = systemCompleted ? "CLEAN" : "POLLUTED";
+  }
+
+  /* Home progress */
+  const homeProgressElement = document.getElementById("homeProgress");
+
+  if (homeProgressElement) {
+    homeProgressElement.textContent = progress;
+  }
+
+  /* Water System progress */
+  const stageProgressElement = document.getElementById("stageProgress");
+
+  if (stageProgressElement) {
+    stageProgressElement.textContent = progress;
+  }
+
+  /* =========================
+     CURRENT NODE INFORMATION
+     ========================= */
+
+  const currentTitle = stageData[currentStage].title;
+  const currentDescription = stageData[currentStage].description;
+
+  /* Water System sidebar */
+  const currentStageTitle = document.getElementById("currentStageTitle");
+
+  if (currentStageTitle) {
+    currentStageTitle.textContent = currentTitle;
+  }
+
+  const currentStageDescription = document.getElementById("currentStageDescription");
+
+  if (currentStageDescription) {
+    currentStageDescription.textContent = currentDescription;
+  }
+
+  /* Home sidebar */
+  const homeCurrentStageTitle = document.querySelector(
+    ".home-monitor-panel .sidebar-data strong"
+  );
+
+  if (homeCurrentStageTitle) {
+    homeCurrentStageTitle.textContent = currentTitle;
+  }
+
+  const homeCurrentStageDescription = document.querySelector(
+    ".home-monitor-panel .sidebar-data p"
+  );
+
+  if (homeCurrentStageDescription) {
+    homeCurrentStageDescription.textContent = currentDescription;
+  }
+
+  /* =========================
+     ARTWORK INFORMATION
+     ========================= */
+
+  const artTitle = document.getElementById("artTitle");
+
+  if (artTitle) {
+    artTitle.textContent = currentTitle;
+  }
+
+  const artStatus = document.getElementById("artStatus");
+
+  if (artStatus) {
+    artStatus.textContent = stageIsClean ? "CLEAN" : "POLLUTED";
+  }
+
+  /* =========================
+     ALL NODE BUTTONS
+     ========================= */
+
+  document.querySelectorAll(".stage-button").forEach((button) => {
+    const index = Number(button.dataset.stage);
+
+    button.classList.toggle("active", index === currentStage);
+    button.classList.toggle("clean", stageCleanState[index]);
+
+    const stateElement = button.querySelector(".stage-state");
+
+    if (stateElement) {
+      stateElement.textContent = stageCleanState[index]
+        ? "CLEAN"
+        : "POLLUTED";
     }
+  });
 
-    function loadArtwork(index) {
-      if (currentArtwork) {
-        currentArtwork.remove();
-        currentArtwork = null;
+  /* =========================
+     BODY STATUS
+     ========================= */
+
+  document.body.dataset.status = systemCompleted ? "clean" : "polluted";
+
+  /* =========================
+     AFTER / CLEAN WATER IMAGE
+     ========================= */
+
+  const afterImage = document.getElementById("afterImage");
+  const afterStatus = document.getElementById("afterStatus");
+  const afterLock = document.getElementById("afterLock");
+  const afterCard = document.getElementById("afterCard");
+  const afterRiskText = document.querySelector(".after-risk-text");
+
+  if (afterImage && afterStatus && afterLock && afterCard) {
+
+    if (allClean) {
+      afterImage.src = cleanImage;
+      afterStatus.textContent = "CLEAN WATER";
+
+      afterLock.classList.add("hidden");
+      afterCard.classList.add("unlocked");
+
+      if (afterRiskText) {
+        afterRiskText.textContent = "SAFE";
       }
 
-      const container = document.getElementById("artContainer");
-      container.innerHTML = "";
-      currentArtwork = artworkCreators[index](container);
-      mountArtworkToContainer(container, currentArtwork);
-      currentStage = index;
-      updateUI();
-    }
+      if (!completionPopupShown) {
+        completionPopupShown = true;
 
-    function markStageClean(index) {
-      if (stageCleanState[index]) return;
-      stageCleanState[index] = true;
-      updateUI();
-    }
+        const completionPopup =
+          document.getElementById("completionPopup");
 
-    function updateUI() {
-      const cleanCount = stageCleanState.filter(Boolean).length;
-      const allClean = cleanCount === 4;
-      const stageIsClean = stageCleanState[currentStage];
-
-      document.getElementById("cleanCount").textContent = `${cleanCount} / 4`;
-      document.getElementById("stageProgress").textContent = `${Math.round(cleanCount / 4 * 100).toString().padStart(2, "0")}%`;
-      document.getElementById("systemState").textContent = allClean ? "STABLE" : "AT RISK";
-      document.getElementById("globalStatus").textContent = allClean ? "CLEAN" : "POLLUTED";
-
-      document.getElementById("currentStageTitle").textContent = stageData[currentStage].title;
-      document.getElementById("currentStageDescription").textContent = stageData[currentStage].description;
-      document.getElementById("artTitle").textContent = stageData[currentStage].title;
-      document.getElementById("artStatus").textContent = stageIsClean ? "CLEAN" : "POLLUTED";
-
-      document.querySelectorAll(".stage-button").forEach((button, index) => {
-        button.classList.toggle("active", index === currentStage);
-        button.classList.toggle("clean", stageCleanState[index]);
-        button.querySelector(".stage-state").textContent = stageCleanState[index] ? "CLEAN" : "POLLUTED";
-      });
-
-      document.body.dataset.status = allClean && brightModeEnabled ? "clean" : "polluted";
-
-      const afterImage = document.getElementById("afterImage");
-      const afterStatus = document.getElementById("afterStatus");
-      const afterLock = document.getElementById("afterLock");
-
-      if (allClean) {
-        afterImage.src = cleanImage;
-        afterStatus.textContent = "CLEAN WATER";
-        afterLock.classList.add("hidden");
-        document.getElementById("afterCard").classList.add("unlocked");
-
-        if (!completionPopupShown) {
-          completionPopupShown = true;
-          const completionPopup = document.getElementById("completionPopup");
+        if (completionPopup) {
           completionPopup.classList.add("visible");
           completionPopup.setAttribute("aria-hidden", "false");
         }
-      } else {
-        afterImage.src = beforeImage;
-        afterStatus.textContent = "LOCKED — CLEAN ALL 4 NODES";
-        afterLock.classList.remove("hidden");
-        document.getElementById("afterCard").classList.remove("unlocked");
+      }
+
+      /* Automatically return to Home after clean version appears */
+      if (!systemCompleted) {
+        window.setTimeout(() => {
+          systemCompleted = true;
+
+          document.body.classList.add("system-completed");
+
+          showPage("page-home");
+
+          updateUI();
+        }, 1200);
+      }
+
+    } else {
+      afterImage.src = beforeImage;
+      afterStatus.textContent = "LOCKED — CLEAN ALL 4 NODES";
+
+      afterLock.classList.remove("hidden");
+      afterCard.classList.remove("unlocked");
+
+      if (afterRiskText) {
+        afterRiskText.textContent = "AT RISK";
       }
     }
+  }
+}
 
-    function selectStage(index) {
-      currentStage = index;
-      loadArtwork(index);
-      document.querySelector(".art-panel").scrollIntoView({ behavior: "smooth", block: "start" });
+/* =========================
+   SELECT NODE
+   ========================= */
+
+function selectStage(index) {
+  currentStage = index;
+
+  const activePage = document.querySelector(".page.active");
+
+  if (activePage && activePage.id === "page-water") {
+    loadArtwork(index);
+  } else {
+    updateUI();
+  }
+}
+
+/* =========================
+   NODE BUTTON EVENTS
+   ========================= */
+
+document.querySelectorAll(".stage-button").forEach((button) => {
+  button.addEventListener("click", () => {
+    const index = Number(button.dataset.stage);
+
+    selectStage(index);
+  });
+});
+
+/* =========================
+   COMPLETION / BRIGHT MODE
+   ========================= */
+
+document.addEventListener("pointerdown", () => {
+  if (!completionPopupShown || brightModeEnabled) return;
+
+  brightModeEnabled = true;
+
+  document.body.classList.add("clean-mode-transition");
+  document.body.dataset.status = "clean";
+
+  const phValue = document.getElementById("phValue");
+  const doValue = document.getElementById("doValue");
+  const tempValue = document.getElementById("tempValue");
+
+  if (phValue) {
+    phValue.textContent = "7.2";
+  }
+
+  if (doValue) {
+    doValue.textContent = "7.4 mg/L";
+  }
+
+  if (tempValue) {
+    tempValue.textContent = "26°C";
+  }
+
+  const completionPopup = document.getElementById("completionPopup");
+
+  if (completionPopup) {
+    completionPopup.classList.remove("visible");
+    completionPopup.setAttribute("aria-hidden", "true");
+  }
+
+  window.setTimeout(() => {
+    document.body.classList.remove("clean-mode-transition");
+  }, 900);
+});
+
+/* =========================
+   INITIAL ARTWORK
+   ========================= */
+
+loadArtwork(0);
+
+/* =========================
+   LOADING SCREEN
+   ========================= */
+
+window.setTimeout(() => {
+  const loadingScreen = document.getElementById("loadingScreen");
+
+  if (loadingScreen) {
+    loadingScreen.classList.add("hidden");
+  }
+}, 5000);
+
+/* =========================
+   PAGE NAVIGATION
+   ========================= */
+
+function showPage(pageId) {
+
+  /* Block locked pages */
+  if (!systemStarted && pageId !== "page-home") {
+    return;
+  }
+
+  if (systemStarted && !systemCompleted) {
+    if (pageId === "page-data" || pageId === "page-cta") {
+      return;
     }
+  }
 
-    document.querySelectorAll(".stage-button").forEach(button => {
-      button.addEventListener("click", () => {
-        selectStage(Number(button.dataset.stage));
+  const pages = document.querySelectorAll(".page");
+  pages.forEach((page) => {
+    page.classList.remove("active", "page-enter");
+  });
+
+  const target = document.getElementById(pageId);
+
+  if (target) {
+    target.classList.add("active");
+
+    /*
+      Force one browser paint before adding page-enter.
+      This makes the animation restart reliably every time,
+      without putting animation on the .page itself.
+    */
+    requestAnimationFrame(() => {
+      requestAnimationFrame(() => {
+        if (target.classList.contains("active")) {
+          target.classList.add("page-enter");
+        }
       });
     });
+  }
 
-    document.addEventListener("pointerdown", () => {
-      if (!completionPopupShown || brightModeEnabled) return;
+  document.querySelectorAll(".nav-button").forEach((button) => {
+    button.classList.toggle(
+      "active",
+      button.dataset.target === pageId
+    );
+  });
 
-      brightModeEnabled = true;
-      document.body.classList.add("clean-mode-transition");
-      document.body.dataset.status = "clean";
-      document.body.classList.add("bright-mode");
-      document.getElementById("phValue").textContent = "7.2";
-      document.getElementById("doValue").textContent = "7.4 mg/L";
-      document.getElementById("tempValue").textContent = "26°C";
-      const completionPopup = document.getElementById("completionPopup");
-      completionPopup.classList.remove("visible");
-      completionPopup.setAttribute("aria-hidden", "true");
-      window.setTimeout(() => {
-        document.body.classList.remove("clean-mode-transition");
-      }, 900);
-    });
+  if (
+    pageId === "page-water" &&
+    document.getElementById("artContainer")
+  ) {
+    loadArtwork(currentStage || 0);
+  }
 
-    loadArtwork(0);
+  if (pageId === "page-home") {
+    updateUI();
+  }
+}
 
-    window.setTimeout(() => {
-      document.getElementById("loadingScreen").classList.add("hidden");
-    }, 5000);
-  </script>
-</body>
-</html>
+/* =========================
+   NAVIGATION BUTTON EVENTS
+   ========================= */
+
+document.querySelectorAll(".nav-button").forEach((button) => {
+  button.addEventListener("click", () => {
+    showPage(button.dataset.target);
+  });
+});
+
+/* =========================
+   START TO CLEAN
+   ========================= */
+
+const startCleanButton = document.querySelector(".start-clean-button");
+
+if (startCleanButton) {
+  startCleanButton.addEventListener("click", () => {
+
+    systemStarted = true;
+
+    document.body.classList.add("system-started");
+
+    showPage("page-water");
+  });
+}
+
+/* =========================
+   INITIAL PAGE
+   ========================= */
+
+showPage("page-home");
+</script>

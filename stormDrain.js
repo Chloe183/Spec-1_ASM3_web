@@ -1,7 +1,7 @@
 function createStormDrainArt(container) {
   return new p5((p) => {
-    const W = 1200;
-    const H = 700;
+    const W = 1920;
+    const H = 1080;
     const BLUE = [69, 138, 215];
     const RED = [198, 40, 40];
     const WHITE = [244, 248, 251];
@@ -10,7 +10,11 @@ function createStormDrainArt(container) {
 
     p.setup = () => {
       p.createCanvas(W, H);
+      p.resizeCanvas(W, H);
+      p.pixelDensity(1);
       p.frameRate(30);
+      p.canvas.width = W;
+      p.canvas.height = H;
 
       for (let i = 0; i < 8; i++) {
         trash.push({
@@ -19,6 +23,10 @@ function createStormDrainArt(container) {
           r: p.random(18, 34),
           type: i % 3
         });
+      }
+
+      if (window.stageCleanState && window.stageCleanState[0]) {
+        trash.length = 0;
       }
 
       for (let i = 0; i < 50; i++) {
@@ -120,6 +128,7 @@ function createStormDrainArt(container) {
         p.translate(item.x, item.y);
         p.rotate(p.sin(p.frameCount * .02 + item.x) * .08);
         p.fill(RED);
+
         if (item.type === 0) {
           p.rect(-item.r * .6, -item.r * .9, item.r * 1.2, item.r * 1.8, 7);
         } else if (item.type === 1) {
@@ -128,6 +137,7 @@ function createStormDrainArt(container) {
         } else {
           p.rect(-item.r, -item.r * .5, item.r * 2, item.r, 6);
         }
+
         p.pop();
       }
     }
@@ -145,10 +155,15 @@ function createStormDrainArt(container) {
 
     p.mousePressed = () => {
       if (p.mouseX < 0 || p.mouseX > W || p.mouseY < 0 || p.mouseY > H) return;
+
       for (let i = trash.length - 1; i >= 0; i--) {
         if (p.dist(p.mouseX, p.mouseY, trash[i].x, trash[i].y) < trash[i].r * 1.5) {
           trash.splice(i, 1);
-          if (trash.length === 0) window.markStageClean(0);
+
+          if (trash.length === 0 && window.markStageClean) {
+            window.markStageClean(0);
+          }
+
           return;
         }
       }
