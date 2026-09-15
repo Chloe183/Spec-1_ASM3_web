@@ -384,6 +384,15 @@
     </div>
   </div>
 
+  <div class="explore-guide" id="exploreGuide" aria-hidden="true">
+    <div class="explore-guide-dim" id="exploreGuideDim"></div>
+    <div class="explore-guide-popup" id="exploreGuidePopup">
+      <span class="eyebrow" id="exploreGuideEyebrow">SYSTEM CLEAN / DATA AVAILABLE</span>
+      <strong id="exploreGuideText">CLICK HERE TO SEE<br>THE RESEARCH DATA</strong>
+    </div>
+    <div class="explore-guide-line" id="exploreGuideLine"></div>
+  </div>
+
   <script src="https://cdn.jsdelivr.net/npm/p5@1.11.13/lib/p5.js"></script>
   <script src="stormDrain.js?v=20260912-art-1920"></script>
   <script src="canal.js?v=20260912-art-1920"></script>
@@ -637,10 +646,22 @@ function updateUI() {
           systemCompleted = true;
 
           document.body.classList.add("system-completed");
+          document.body.dataset.status = "clean";
+
+          const phValue = document.getElementById("phValue");
+          const doValue = document.getElementById("doValue");
+          const tempValue = document.getElementById("tempValue");
+
+          if (phValue) phValue.textContent = "7.2";
+          if (doValue) doValue.textContent = "7.4 mg/L";
+          if (tempValue) tempValue.textContent = "26°C";
 
           showPage("page-home");
-
           updateUI();
+
+          window.setTimeout(() => {
+            showExploreGuide();
+          }, 250);
         }, 1200);
       }
 
@@ -655,6 +676,20 @@ function updateUI() {
         afterRiskText.textContent = "AT RISK";
       }
     }
+  }
+
+  const startCleanButton = document.querySelector(".start-clean-button");
+
+  if (startCleanButton) {
+    startCleanButton.textContent = systemCompleted
+      ? "START TO EXPLORE"
+      : "START TO CLEAN";
+
+    startCleanButton.dataset.target = systemCompleted
+      ? "page-data"
+      : "page-water";
+
+    startCleanButton.classList.toggle("explore-mode", systemCompleted);
   }
 }
 
@@ -691,7 +726,8 @@ document.querySelectorAll(".stage-button").forEach((button) => {
    ========================= */
 
 document.addEventListener("pointerdown", () => {
-  if (!completionPopupShown || brightModeEnabled) return;
+  if (document.body.classList.contains("explore-guide-active")) return;
+  if (!completionPopupShown || brightModeEnabled || systemCompleted) return;
 
   brightModeEnabled = true;
 
@@ -745,10 +781,123 @@ window.setTimeout(() => {
 }, 5000);
 
 /* =========================
+   EXPLORE GUIDE
+   ========================= */
+
+function positionExploreGuide(targetPage = "page-data") {
+  const popup = document.getElementById("exploreGuidePopup");
+  const line = document.getElementById("exploreGuideLine");
+  const targetButton = document.querySelector(`.bottom-nav .nav-button[data-target="${targetPage}"]`);
+
+  if (!popup || !line || !targetButton) return;
+
+  const buttonRect = targetButton.getBoundingClientRect();
+  const popupWidth = popup.offsetWidth;
+  const popupHeight = popup.offsetHeight;
+  const gap = 28;
+
+  let popupLeft = buttonRect.left + buttonRect.width / 2 - popupWidth / 2;
+  let popupTop = buttonRect.top - popupHeight - gap;
+
+  if (popupTop < 24) popupTop = buttonRect.bottom + gap;
+
+  popupLeft = Math.max(20, Math.min(popupLeft, window.innerWidth - popupWidth - 20));
+
+  popup.style.left = `${popupLeft}px`;
+  popup.style.top = `${popupTop}px`;
+
+  const popupRect = popup.getBoundingClientRect();
+  const startX = popupRect.left + popupRect.width / 2;
+  const startY = popupTop < buttonRect.top ? popupRect.bottom : popupRect.top;
+  const endX = buttonRect.left + buttonRect.width / 2;
+  const endY = popupTop < buttonRect.top ? buttonRect.top : buttonRect.bottom;
+  const dx = endX - startX;
+  const dy = endY - startY;
+  const length = Math.sqrt(dx * dx + dy * dy);
+  const angle = Math.atan2(dy, dx) * 180 / Math.PI;
+
+  line.style.left = `${startX}px`;
+  line.style.top = `${startY}px`;
+  line.style.width = `${length}px`;
+  line.style.transform = `rotate(${angle}deg)`;
+}
+
+function showExploreGuide(targetPage = "page-data") {
+  const guide = document.getElementById("exploreGuide");
+  const dim = document.getElementById("exploreGuideDim");
+  const eyebrow = document.getElementById("exploreGuideEyebrow");
+  const text = document.getElementById("exploreGuideText");
+  const completionPopup = document.getElementById("completionPopup");
+
+  if (!guide || !systemCompleted) return;
+
+  if (completionPopup) {
+    completionPopup.classList.remove("visible");
+    completionPopup.setAttribute("aria-hidden", "true");
+  }
+
+  const isActionGuide = targetPage === "page-cta";
+
+  document.body.classList.remove("explore-guide-active", "action-guide-active");
+  document.body.classList.add(isActionGuide ? "action-guide-active" : "explore-guide-active");
+
+  if (dim) {
+    dim.style.display = isActionGuide ? "none" : "block";
+  }
+
+  if (eyebrow) {
+    eyebrow.textContent = isActionGuide
+      ? "RESEARCH DATA / ACTION AVAILABLE"
+      : "SYSTEM CLEAN / DATA AVAILABLE";
+  }
+
+  if (text) {
+    text.innerHTML = isActionGuide
+      ? "CLICK HERE TO SEE<br>WHAT YOU CAN DO"
+      : "CLICK HERE TO SEE<br>THE RESEARCH DATA";
+  }
+
+  guide.classList.add("visible");
+  guide.setAttribute("aria-hidden", "false");
+
+  requestAnimationFrame(() => {
+    positionExploreGuide(targetPage);
+  });
+}
+
+function hideExploreGuide() {
+  const guide = document.getElementById("exploreGuide");
+  const dim = document.getElementById("exploreGuideDim");
+
+  document.body.classList.remove("explore-guide-active", "action-guide-active");
+
+  if (dim) {
+    dim.style.display = "block";
+  }
+
+  if (guide) {
+    guide.classList.remove("visible");
+    guide.setAttribute("aria-hidden", "true");
+  }
+}
+
+window.addEventListener("resize", () => {
+  if (document.body.classList.contains("explore-guide-active")) {
+    positionExploreGuide("page-data");
+  }
+
+  if (document.body.classList.contains("action-guide-active")) {
+    positionExploreGuide("page-cta");
+  }
+});
+
+/* =========================
    PAGE NAVIGATION
    ========================= */
 
 function showPage(pageId) {
+
+  hideExploreGuide();
 
   /* Block locked pages */
   if (!systemStarted && pageId !== "page-home") {
@@ -810,7 +959,26 @@ function showPage(pageId) {
 
 document.querySelectorAll(".nav-button").forEach((button) => {
   button.addEventListener("click", () => {
-    showPage(button.dataset.target);
+    const targetPage = button.dataset.target;
+
+    if (document.body.classList.contains("explore-guide-active")) {
+      if (targetPage !== "page-data") return;
+      hideExploreGuide();
+      showPage("page-data");
+      window.setTimeout(() => {
+        showExploreGuide("page-cta");
+      }, 350);
+      return;
+    }
+
+    if (document.body.classList.contains("action-guide-active")) {
+      if (targetPage !== "page-cta") return;
+      hideExploreGuide();
+      showPage("page-cta");
+      return;
+    }
+
+    showPage(targetPage);
   });
 });
 
@@ -822,6 +990,11 @@ const startCleanButton = document.querySelector(".start-clean-button");
 
 if (startCleanButton) {
   startCleanButton.addEventListener("click", () => {
+
+    if (systemCompleted) {
+      showExploreGuide();
+      return;
+    }
 
     systemStarted = true;
 
