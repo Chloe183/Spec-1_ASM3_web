@@ -10,7 +10,7 @@
   <style>
     @import url("https://use.typekit.net/adj6vsr.css");
   </style>
-  <link rel="stylesheet" href="style.css?v=20260912-art-1920">
+  <link rel="stylesheet" href="style.css?v=20260916-review-mobile-2">
 </head>
 <body data-status="polluted">
 
@@ -390,7 +390,13 @@
       <span class="eyebrow" id="exploreGuideEyebrow">SYSTEM CLEAN / DATA AVAILABLE</span>
       <strong id="exploreGuideText">CLICK HERE TO SEE<br>THE RESEARCH DATA</strong>
     </div>
-    <div class="explore-guide-line" id="exploreGuideLine"></div>
+    <div class="explore-guide-popup review-guide-popup" id="reviewGuidePopup" aria-hidden="true">
+      <span class="eyebrow">SYSTEM REVIEW / 3 PAGES REMAIN</span>
+      <strong>CLICK THE 3 BUTTONS<br>TO REVIEW AGAIN</strong>
+    </div>
+    <div class="explore-guide-line" id="exploreGuideLineHome"></div>
+    <div class="explore-guide-line" id="exploreGuideLineWater"></div>
+    <div class="explore-guide-line" id="exploreGuideLineData"></div>
   </div>
 
   <script src="https://cdn.jsdelivr.net/npm/p5@1.11.13/lib/p5.js"></script>
@@ -434,6 +440,9 @@ let completionPopupShown = false;
 let brightModeEnabled = false;
 let systemStarted = false;
 let systemCompleted = false;
+let reviewGuideActive = false;
+const reviewGuidePages = ["page-home", "page-water", "page-data"];
+const reviewedPages = new Set();
 
 const beforeImage = "images/before.svg";
 const cleanImage = "images/after.svg";
@@ -786,20 +795,37 @@ window.setTimeout(() => {
 
 function positionExploreGuide(targetPage = "page-data") {
   const popup = document.getElementById("exploreGuidePopup");
-  const line = document.getElementById("exploreGuideLine");
-  const targetButton = document.querySelector(`.bottom-nav .nav-button[data-target="${targetPage}"]`);
+  const lineIds = [
+    "exploreGuideLineHome",
+    "exploreGuideLineWater",
+    "exploreGuideLineData"
+  ];
 
-  if (!popup || !line || !targetButton) return;
+  if (!popup) return;
 
-  const buttonRect = targetButton.getBoundingClientRect();
+  const targetButtons = reviewGuideActive
+    ? reviewGuidePages
+        .filter((page) => !reviewedPages.has(page))
+        .map((page) => document.querySelector(`.bottom-nav .nav-button[data-target="${page}"]`))
+        .filter(Boolean)
+    : [document.querySelector(`.bottom-nav .nav-button[data-target="${targetPage}"]`)].filter(Boolean);
+
+  if (!targetButtons.length) return;
+
+  const rects = targetButtons.map((button) => button.getBoundingClientRect());
+  const minCenterX = Math.min(...rects.map((rect) => rect.left + rect.width / 2));
+  const maxCenterX = Math.max(...rects.map((rect) => rect.left + rect.width / 2));
+  const centerX = (minCenterX + maxCenterX) / 2;
   const popupWidth = popup.offsetWidth;
   const popupHeight = popup.offsetHeight;
   const gap = 28;
 
-  let popupLeft = buttonRect.left + buttonRect.width / 2 - popupWidth / 2;
-  let popupTop = buttonRect.top - popupHeight - gap;
+  let popupLeft = centerX - popupWidth / 2;
+  let popupTop = Math.min(...rects.map((rect) => rect.top)) - popupHeight - gap;
 
-  if (popupTop < 24) popupTop = buttonRect.bottom + gap;
+  if (popupTop < 24) {
+    popupTop = Math.max(...rects.map((rect) => rect.bottom)) + gap;
+  }
 
   popupLeft = Math.max(20, Math.min(popupLeft, window.innerWidth - popupWidth - 20));
 
@@ -808,18 +834,36 @@ function positionExploreGuide(targetPage = "page-data") {
 
   const popupRect = popup.getBoundingClientRect();
   const startX = popupRect.left + popupRect.width / 2;
-  const startY = popupTop < buttonRect.top ? popupRect.bottom : popupRect.top;
-  const endX = buttonRect.left + buttonRect.width / 2;
-  const endY = popupTop < buttonRect.top ? buttonRect.top : buttonRect.bottom;
-  const dx = endX - startX;
-  const dy = endY - startY;
-  const length = Math.sqrt(dx * dx + dy * dy);
-  const angle = Math.atan2(dy, dx) * 180 / Math.PI;
+  const isPopupAbove = popupTop < rects[0].top;
+  const startY = isPopupAbove ? popupRect.bottom : popupRect.top;
 
-  line.style.left = `${startX}px`;
-  line.style.top = `${startY}px`;
-  line.style.width = `${length}px`;
-  line.style.transform = `rotate(${angle}deg)`;
+  lineIds.forEach((lineId) => {
+    const line = document.getElementById(lineId);
+    if (!line) return;
+
+    line.style.display = "none";
+  });
+
+  targetButtons.forEach((button) => {
+    const targetPageForLine = button.dataset.target;
+    const lineId = `exploreGuideLine${targetPageForLine === "page-home" ? "Home" : targetPageForLine === "page-water" ? "Water" : "Data"}`;
+    const line = document.getElementById(lineId);
+    if (!line) return;
+
+    const buttonRect = button.getBoundingClientRect();
+    const endX = buttonRect.left + buttonRect.width / 2;
+    const endY = isPopupAbove ? buttonRect.top : buttonRect.bottom;
+    const dx = endX - startX;
+    const dy = endY - startY;
+    const length = Math.sqrt(dx * dx + dy * dy);
+    const angle = Math.atan2(dy, dx) * 180 / Math.PI;
+
+    line.style.display = "block";
+    line.style.left = `${startX}px`;
+    line.style.top = `${startY}px`;
+    line.style.width = `${length}px`;
+    line.style.transform = `rotate(${angle}deg)`;
+  });
 }
 
 function showExploreGuide(targetPage = "page-data") {
@@ -836,9 +880,10 @@ function showExploreGuide(targetPage = "page-data") {
     completionPopup.setAttribute("aria-hidden", "true");
   }
 
-  const isActionGuide = targetPage === "page-cta";
+  reviewGuideActive = false;
+  document.body.classList.remove("explore-guide-active", "action-guide-active", "review-guide-active");
 
-  document.body.classList.remove("explore-guide-active", "action-guide-active");
+  const isActionGuide = targetPage === "page-cta";
   document.body.classList.add(isActionGuide ? "action-guide-active" : "explore-guide-active");
 
   if (dim) {
@@ -865,14 +910,104 @@ function showExploreGuide(targetPage = "page-data") {
   });
 }
 
+function positionReviewGuide() {
+  const popup = document.getElementById("reviewGuidePopup");
+  if (!popup) return;
+  const pages = reviewGuidePages.filter((page) => !reviewedPages.has(page));
+  const buttons = pages.map((page) => document.querySelector(`.bottom-nav .nav-button[data-target="${page}"]`)).filter(Boolean);
+  if (!buttons.length) return;
+  const rects = buttons.map((button) => button.getBoundingClientRect());
+  const minX = Math.min(...rects.map((r) => r.left + r.width / 2));
+  const maxX = Math.max(...rects.map((r) => r.left + r.width / 2));
+  const centerX = (minX + maxX) / 2;
+  const gap = 28;
+  const popupWidth = popup.offsetWidth;
+  const popupHeight = popup.offsetHeight;
+  let left = centerX - popupWidth / 2;
+  let top = Math.min(...rects.map((r) => r.top)) - popupHeight - gap;
+  let above = true;
+  if (top < 24) { top = Math.max(...rects.map((r) => r.bottom)) + gap; above = false; }
+  left = Math.max(20, Math.min(left, window.innerWidth - popupWidth - 20));
+  popup.style.left = `${left}px`;
+  popup.style.top = `${top}px`;
+  const popupRect = popup.getBoundingClientRect();
+  const startX = popupRect.left + popupRect.width / 2;
+  const startY = above ? popupRect.bottom : popupRect.top;
+  ["page-home", "page-water", "page-data"].forEach((page) => {
+    const suffix = page === "page-home" ? "Home" : page === "page-water" ? "Water" : "Data";
+    const line = document.getElementById(`exploreGuideLine${suffix}`);
+    if (line) line.style.display = "none";
+  });
+  buttons.forEach((button) => {
+    const page = button.dataset.target;
+    const suffix = page === "page-home" ? "Home" : page === "page-water" ? "Water" : "Data";
+    const line = document.getElementById(`exploreGuideLine${suffix}`);
+    if (!line) return;
+    const rect = button.getBoundingClientRect();
+    const endX = rect.left + rect.width / 2;
+    const endY = above ? rect.top : rect.bottom;
+    const dx = endX - startX;
+    const dy = endY - startY;
+    line.style.display = "block";
+    line.style.left = `${startX}px`;
+    line.style.top = `${startY}px`;
+    line.style.width = `${Math.sqrt(dx * dx + dy * dy)}px`;
+    line.style.transform = `rotate(${Math.atan2(dy, dx) * 180 / Math.PI}deg)`;
+  });
+}
+
+function showReviewGuide() {
+  const guide = document.getElementById("exploreGuide");
+  const dim = document.getElementById("exploreGuideDim");
+  const oldPopup = document.getElementById("exploreGuidePopup");
+  const reviewPopup = document.getElementById("reviewGuidePopup");
+
+  if (!guide || !reviewPopup || !systemCompleted) return;
+  if (reviewedPages.size >= reviewGuidePages.length) return;
+
+  reviewGuideActive = true;
+  document.body.classList.remove("explore-guide-active", "action-guide-active");
+  document.body.classList.add("review-guide-active");
+
+  if (dim) dim.style.display = "none";
+  if (oldPopup) oldPopup.style.display = "none";
+
+  // Make the NEW review popup explicitly visible.
+  reviewPopup.style.display = "flex";
+  reviewPopup.style.visibility = "visible";
+  reviewPopup.style.opacity = "1";
+  reviewPopup.setAttribute("aria-hidden", "false");
+
+  guide.classList.add("visible");
+  guide.setAttribute("aria-hidden", "false");
+
+  requestAnimationFrame(() => {
+    positionReviewGuide();
+  });
+}
+
 function hideExploreGuide() {
   const guide = document.getElementById("exploreGuide");
   const dim = document.getElementById("exploreGuideDim");
 
-  document.body.classList.remove("explore-guide-active", "action-guide-active");
+  reviewGuideActive = false;
+  document.body.classList.remove("explore-guide-active", "action-guide-active", "review-guide-active");
 
   if (dim) {
     dim.style.display = "block";
+  }
+
+  ["exploreGuideLineHome", "exploreGuideLineWater", "exploreGuideLineData"].forEach((lineId) => {
+    const line = document.getElementById(lineId);
+    if (line) line.style.display = "none";
+  });
+
+  const oldPopup = document.getElementById("exploreGuidePopup");
+  const reviewPopup = document.getElementById("reviewGuidePopup");
+  if (oldPopup) oldPopup.style.display = "flex";
+  if (reviewPopup) {
+    reviewPopup.style.display = "none";
+    reviewPopup.setAttribute("aria-hidden", "true");
   }
 
   if (guide) {
@@ -888,6 +1023,10 @@ window.addEventListener("resize", () => {
 
   if (document.body.classList.contains("action-guide-active")) {
     positionExploreGuide("page-cta");
+  }
+
+  if (document.body.classList.contains("review-guide-active")) {
+    positionReviewGuide();
   }
 });
 
@@ -951,6 +1090,7 @@ function showPage(pageId) {
   if (pageId === "page-home") {
     updateUI();
   }
+
 }
 
 /* =========================
@@ -974,7 +1114,30 @@ document.querySelectorAll(".nav-button").forEach((button) => {
     if (document.body.classList.contains("action-guide-active")) {
       if (targetPage !== "page-cta") return;
       hideExploreGuide();
+      reviewedPages.clear();
+      document.querySelectorAll(".nav-button").forEach((navButton) => {
+        navButton.classList.remove("reviewed");
+      });
       showPage("page-cta");
+      window.setTimeout(() => {
+        showReviewGuide();
+      }, 500);
+      return;
+    }
+
+    if (document.body.classList.contains("review-guide-active")) {
+      if (!reviewGuidePages.includes(targetPage) || reviewedPages.has(targetPage)) return;
+
+      reviewedPages.add(targetPage);
+      button.classList.add("reviewed");
+      hideExploreGuide();
+      showPage(targetPage);
+
+      if (reviewedPages.size < reviewGuidePages.length) {
+        window.setTimeout(() => {
+          showReviewGuide();
+        }, 350);
+      }
       return;
     }
 
